@@ -57,10 +57,6 @@ function(Zeega, Backbone, _Layer){
 	Layer.Image.Visual = _Layer.Visual.extend({
 		
 		template : 'plugins/image',
-		init : function()
-		{
-			console.log('image init', this);
-		},
 
 		serialize : function(){ return this.model.toJSON(); },
 		

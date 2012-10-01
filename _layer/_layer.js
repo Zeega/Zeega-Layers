@@ -1,5 +1,6 @@
 define([
-	"backbone"
+	"backbone",
+	"plugins/backbone.layoutmanager"
 ],
 
 function(Backbone){
@@ -52,6 +53,15 @@ function(Backbone){
 		beforeRender : function()
 		{
 			$('.ZEEGA-player-window').append( this.el );
+			this.applySize();
+		},
+
+		applySize : function()
+		{
+			this.$el.css({
+				//height : this.getAttr('height') +'%', // photos need a height!
+				width : this.getAttr('width') +'%'
+			});
 		},
 
 		init : function(){},
