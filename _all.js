@@ -7,7 +7,7 @@ this should be auto generated probably!!
 */
 
 define([
-	'zeega_plugins/image/image'
+	'zeega_layers/image/image'
 ],
 	function(
 		image

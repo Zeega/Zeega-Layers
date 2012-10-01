@@ -1,7 +1,7 @@
 define([
   "zeega",
   "backbone",
-  'zeega_plugins/_layer/_layer'
+  'zeega_layers/_layer/_layer'
 ],
 
 function(Zeega, Backbone, _Layer){
