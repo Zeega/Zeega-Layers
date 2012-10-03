@@ -1,10 +1,9 @@
 define([
   "zeega",
-  "backbone",
   'zeega_layers/_layer/_layer'
 ],
 
-function(Zeega, Backbone, _Layer){
+function(Zeega, _Layer){
 
 	var Layer = Zeega.module();
 

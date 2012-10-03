@@ -1,9 +1,8 @@
 define([
-	"backbone",
 	"plugins/backbone.layoutmanager"
 ],
 
-function(Backbone){
+function(){
 
 	_Layer = Backbone.Model.extend({
 		
