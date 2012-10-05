@@ -11,8 +11,13 @@ function(){
 		controls : [],
 
 		defaults : {
-			hasControls : true,
-			defaultControls : true,
+			citataion: true,
+			default_controls : true,
+			draggable : true,
+			has_controls : true,
+			linkable : true,
+			mode : 'player',
+			resizable : false,
 			showCitation : true
 		},
 		defaultAttributes : {},
@@ -41,7 +46,6 @@ function(){
 	_Layer.Visual = Backbone.LayoutView.extend({
 		
 		className : 'visual-element',
-		draggable : true,
 		template : '',
 
 		initialize : function()
@@ -49,9 +53,13 @@ function(){
 			this.init();
 		},
 
+		beforePlayerRender : function(){},
 		beforeRender : function()
 		{
+			this.className = this._className +' '+ this.className;
+			this.beforePlayerRender();
 			$('.ZEEGA-player-window').append( this.el );
+			this.moveOffStage();
 			this.applySize();
 		},
 
@@ -66,12 +74,21 @@ function(){
 		init : function(){},
 		render : function(){},
 
-		verifyReady : function(){ this.model.trigger('ready',this.model.id); },
+		// default verify fxn. return ready immediately
+		verifyReady : function(){ this.model.trigger('visual_ready',this.model.id); },
 
-		player_onPreload : function(){ this.verifyReady(); },
+		player_onPreload : function()
+		{
+			this.render();
+			this.verifyReady();
+		},
 		player_onPlay : function(){},
 		player_onPause : function(){},
-		player_onExit : function(){},
+		player_onExit : function()
+		{
+			this.pause();
+			this.moveOffStage();
+		},
 		player_onUnrender : function(){},
 		player_onRenderError : function(){},
 
@@ -80,10 +97,26 @@ function(){
 		editor_onControlsOpen : function(){},
 		editor_onControlsClosed : function(){},
 
+		moveOffStage : function()
+		{
+			this.$el.css({
+				top: '-1000%',
+				left: '-1000%'
+			});
+		},
+
+		moveOnStage : function()
+		{
+			this.$el.css({
+				top: this.getAttr('top') +'%',
+				left: this.getAttr('left') +'%'
+			});
+		},
 
 		play : function()
 		{
 			this.isPlaying = true;
+			this.moveOnStage();
 			this.player_onPlay();
 		},
 
@@ -95,7 +128,6 @@ function(){
 
 		playPause : function()
 		{
-			console.log('play pause layer', this);
 			if( this.isPlaying !== false )
 			{
 				this.isPlaying = false;

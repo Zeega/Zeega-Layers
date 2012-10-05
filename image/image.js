@@ -1,6 +1,9 @@
 define([
-  "zeega",
-  'zeega_layers/_layer/_layer'
+	"zeega",
+	'zeega_layers/_layer/_layer',
+
+	//plugins
+	'plugins/jquery.imagesloaded.min'
 ],
 
 function(Zeega, _Layer){
@@ -19,10 +22,7 @@ function(Zeega, _Layer){
 			'height' : 100,
 			'width' : 100,
 			'opacity':1,
-			'aspect':1.33,
-			'citation':true,
-			
-			'linkable' : true
+			'aspect':1.33
 		},
 
 		controls : [
@@ -63,8 +63,8 @@ function(Zeega, _Layer){
 		{
 			var _this = this;
 			var img = this.$el.imagesLoaded();
-			img.done(function(){ _this.model.trigger('ready',_this.model.id); });
-			img.fail(function(){ _this.model.trigger('error',_this.model.id); });
+			img.done(function(){ _this.model.trigger('visual_ready',_this.model.id); });
+			img.fail(function(){ _this.model.trigger('visual_error',_this.model.id); });
 		}
 		
 	});
