@@ -45,6 +45,7 @@ function(Zeega, _Layer){
 			this.$el.css({'height': '100%'});
 			this.hideArrows();
 			this.initKeyboard();
+			this.emitSlideData( this.slide );
 		},
 
 		onExit : function()
@@ -82,6 +83,12 @@ function(Zeega, _Layer){
 		scrollTo : function( slideNo )
 		{
 			this.$el.animate({left: (slideNo * -100)+'%'});
+			this.emitSlideData(slideNo);
+		},
+
+		emitSlideData : function(slideNo)
+		{
+			this.model.trigger('slideshow_update',this.getAttr('slides')[slideNo] );
 		},
 
 		hideArrows : function()
