@@ -82,15 +82,43 @@ function(){
 			this.render();
 			this.verifyReady();
 		},
-		player_onPlay : function(){},
-		player_onPause : function(){},
+		player_onPlay : function()
+		{
+			this.onPlay();
+		},
+		player_onPause : function()
+		{
+			this.onPause();
+		},
 		player_onExit : function()
 		{
 			this.pause();
 			this.moveOffStage();
+			this.onExit();
 		},
 		player_onUnrender : function(){},
 		player_onRenderError : function(){},
+
+		onPreload : function()
+		{
+
+		},
+
+		onPlay : function()
+		{
+
+		},
+
+		onPause : function()
+		{
+
+		},
+
+		onExit : function()
+		{
+
+		},
+
 
 		editor_onLayerEnter : function(){},
 		editor_onLayerExit : function(){},

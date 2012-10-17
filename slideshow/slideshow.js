@@ -36,14 +36,21 @@ function(Zeega, _Layer){
 		init : function()
 		{
 			this.slideCount = this.model.get('attr').slides.length;
+			console.log(this)
 		},
 
 		serialize : function(){ return this.model.toJSON(); },
 
-		player_onPlay : function()
+		onPlay : function()
 		{
 			this.$el.css({'height': '100%'});
 			this.hideArrows();
+			this.initKeyboard();
+		},
+
+		onExit : function()
+		{
+			killKeyboard();
 		},
 
 		events : {
@@ -96,6 +103,30 @@ function(Zeega, _Layer){
 			{
 				this.$('.slideshow-left-arrow, .slideshow-right-arrow').removeClass('disabled');
 			}
+		},
+
+		initKeyboard : function()
+		{
+			if( this.getAttr('keyboard') )
+			{
+				var _this = this;
+				$(window).bind('keyup.slideshow', function(e){
+					switch( e.which )
+					{
+						case 37: // left arrow
+							_this.goLeft();
+							break;
+						case 39: // right arrow
+							_this.goRight();
+							break;
+					}
+				});
+			}
+		},
+
+		killKeyboard : function()
+		{
+			if( this.getAttr('keyboard') ) $(window).unbind('keyup.slideshow');
 		}
 		
 	});
