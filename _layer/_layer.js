@@ -48,6 +48,8 @@ function(){
 		className : 'visual-element',
 		template : '',
 
+		serialize : function(){ return this.model.toJSON(); },
+
 		initialize : function()
 		{
 			this.init();
