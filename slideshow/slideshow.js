@@ -12,6 +12,9 @@ function(Zeega, _Layer){
 		layerType : 'SlideShow',
 
 		defaultAttributes : {
+			'arrows' : true, // turns on/off visual arrow controls
+			'keyboard' : false, // turns on/off keyboard controls
+
 			'title' : 'Slideshow Layer',
 			'url' : 'none',
 			'left' : 0,
@@ -40,6 +43,7 @@ function(Zeega, _Layer){
 		player_onPlay : function()
 		{
 			this.$el.css({'height': '100%'});
+			this.hideArrows();
 		},
 
 		events : {
@@ -53,6 +57,7 @@ function(Zeega, _Layer){
 			{
 				this.slide--;
 				this.scrollTo(this.slide);
+				this.hideArrows();
 			}
 			return false;
 		},
@@ -63,6 +68,7 @@ function(Zeega, _Layer){
 			{
 				this.slide++;
 				this.scrollTo(this.slide);
+				this.hideArrows();
 			}
 			return false;
 		},
@@ -70,6 +76,26 @@ function(Zeega, _Layer){
 		scrollTo : function( slideNo )
 		{
 			this.$el.animate({left: (slideNo * -100)+'%'});
+		},
+
+		hideArrows : function()
+		{
+			if( this.slideCount <= 1 )
+			{
+				this.$('.slideshow-arrow').remove();
+			}
+			else if( this.slide === 0 )
+			{
+				this.$('.slideshow-left-arrow').addClass('disabled');
+			}
+			else if( this.slide == this.slideCount - 1 )
+			{
+				this.$('.slideshow-right-arrow').addClass('disabled');
+			}
+			else
+			{
+				this.$('.slideshow-left-arrow, .slideshow-right-arrow').removeClass('disabled');
+			}
 		}
 		
 	});

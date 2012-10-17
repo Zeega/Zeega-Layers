@@ -18,6 +18,12 @@
 	position:fixed;
 	top:40%;
 	z-index:2;
+	opacity:1;
+	transition: opacity 0.5s;
+	-moz-transition: opacity 0.5s; /* Firefox 4 */
+	-webkit-transition: opacity 0.5s; /* Safari and Chrome */
+	-o-transition: opacity 0.5s; /* Opera */
+
 	&.slideshow-right-arrow
 	{
 		right:0;
@@ -30,5 +36,14 @@
 		-moz-transform:rotate(180deg); /* Firefox */
 		-webkit-transform:rotate(180deg); /* Safari and Chrome */
 		-o-transform:rotate(180deg); /* Opera */
+	}
+
+	&.disabled
+	{
+		opacity:0.0;
+		transition: opacity 0.5s;
+		-moz-transition: opacity 0.5s; /* Firefox 4 */
+		-webkit-transition: opacity 0.5s; /* Safari and Chrome */
+		-o-transition: opacity 0.5s; /* Opera */
 	}
 }
