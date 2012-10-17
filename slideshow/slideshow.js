@@ -36,7 +36,6 @@ function(Zeega, _Layer){
 		init : function()
 		{
 			this.slideCount = this.model.get('attr').slides.length;
-			console.log(this)
 		},
 
 		serialize : function(){ return this.model.toJSON(); },
@@ -87,22 +86,10 @@ function(Zeega, _Layer){
 
 		hideArrows : function()
 		{
-			if( this.slideCount <= 1 )
-			{
-				this.$('.slideshow-arrow').remove();
-			}
-			else if( this.slide === 0 )
-			{
-				this.$('.slideshow-left-arrow').addClass('disabled');
-			}
-			else if( this.slide == this.slideCount - 1 )
-			{
-				this.$('.slideshow-right-arrow').addClass('disabled');
-			}
-			else
-			{
-				this.$('.slideshow-left-arrow, .slideshow-right-arrow').removeClass('disabled');
-			}
+			if( this.slideCount <= 1 )						this.$('.slideshow-arrow').remove();
+			else if( this.slide === 0 )						this.$('.slideshow-left-arrow').addClass('disabled');
+			else if( this.slide == this.slideCount - 1 )	this.$('.slideshow-right-arrow').addClass('disabled');
+			else											this.$('.slideshow-left-arrow, .slideshow-right-arrow').removeClass('disabled');
 		},
 
 		initKeyboard : function()
