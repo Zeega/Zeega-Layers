@@ -73,10 +73,11 @@ function(Zeega, _Layer, MediaPlayer){
 					control_mode : 'none',
 					media_target : '#layer-visual-'+ this.id
 				});
+				console.log('media player', this.mediaPlayer);
 				this.mediaPlayer.render();
 				this.$el.append( this.mediaPlayer.el );
 				this.mediaPlayer.placePlayer();
-				this.mediaPlayer.popcorn.listen('timeupdate',function(){ _this.onTimeUpdate(); });
+				this.mediaPlayer.popcorn.listen('timeupdate', function(){ _this.onTimeUpdate(); });
 				this.mediaPlayer_loaded = true;
 			}
 			else
