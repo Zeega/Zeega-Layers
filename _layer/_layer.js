@@ -65,6 +65,11 @@ function(){
 			this.applySize();
 		},
 
+		afterRender : function()
+		{
+			this.verifyReady();
+		},
+
 		applySize : function()
 		{
 			this.$el.css({
@@ -82,7 +87,6 @@ function(){
 		player_onPreload : function()
 		{
 			this.render();
-			this.verifyReady();
 		},
 		player_onPlay : function()
 		{

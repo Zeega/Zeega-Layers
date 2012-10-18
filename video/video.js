@@ -28,34 +28,7 @@ function(Zeega, _Layer, MediaPlayer){
 			'dissolve': false,
 			'opacity':1,
 			'dimension':1.5,
-			'citation':true,
-		},
-
-		init : function()
-		{
-			this.initMediaPlayer()
-			console.log('init media player', MediaPlayer);
-		},
-		
-		initMediaPlayer : function()
-		{
-			var ct = '#media-controls-'+this.id;
-			this.player = new MediaPlayer.Views.Player({
-				model:this,
-				control_mode : 'editor',
-				media_target : '#layer-visual-'+this.id,
-				controls_target : ct
-			});
-		},
-		
-		initPlayerPlayer : function()
-		{
-			console.log('init player player')
-			this.player = new MediaPlayer.Views.Player({
-				model:this,
-				control_mode : 'none',
-				media_target : '#layer-visual-'+ this.id
-			});
+			'citation':true
 		}
 
 	});
@@ -64,41 +37,92 @@ function(Zeega, _Layer, MediaPlayer){
 		
 		template : 'plugins/video',
 
+		init : function()
+		{
+			//this.mediaPlayer = new MediaPlayer.Views.Player({
+			//	model:this.model,
+			//	control_mode : 'editor',
+			//	media_target : '#layer-visual-'+this.id,
+			//	controls_target : '#media-controls-'+this.id
+			//})
+			console.log('init media player', MediaPlayer);
+		},
+
 		onPlay : function()
 		{
-			this.model.player.play();
+			this.mediaPlayer.play();
 		},
 
 		onPause : function()
 		{
-			this.model.player.pause();
+			this.mediaPlayer.pause();
 		},
 		
 		onExit : function()
 		{
-			this.model.player.pause();
+			this.mediaPlayer.pause();
 		},
 		
 		verifyReady : function()
 		{
-			var _this = this;
-			
-			if( !this.model.player_loaded )
+			if( this.mediaPlayer_loaded !== true )
 			{
 				var _this = this;
-				this.model.initPlayerPlayer();
-				this.$el.html( this.model.player.render().el );
-				this.model.player.placePlayer();
-				this.model.player.popcorn.listen('timeupdate',function(){ _this.onTimeUpdate(); })
-				this.model.player_loaded = true;
+				this.mediaPlayer = new MediaPlayer.Views.Player({
+					model:this.model,
+					control_mode : 'none',
+					media_target : '#layer-visual-'+ this.id
+				});
+				this.mediaPlayer.render();
+				this.$el.append( this.mediaPlayer.el );
+				this.mediaPlayer.placePlayer();
+				this.mediaPlayer.popcorn.listen('timeupdate',function(){ _this.onTimeUpdate(); });
+				this.mediaPlayer_loaded = true;
 			}
 			else
 			{
-				this.model.player.pause();
+				this.mediaPlayer.pause();
 			}
+		},
+
+		onTimeUpdate : function()
+		{
+			//Fades
+			var out,vol;
+			if( this.getAttr('cue_out') === 0 ) out = this.model.player.getDuration();
+			else out = this.getAttr('cue_out');
+			var t = this.mediaPlayer.getCurrentTime();
+			var f = parseFloat(this.getAttr('cue_in'))+parseFloat(this.getAttr('fade_in'));
+			var g = out - parseFloat(this.getAttr('fade_out'));
+
+			if(this.getAttr('fade_in') > 0 && t < f )
+			{
+				vol = this.getAttr('volume') *(1.0-((f-t)/this.getAttr('fade_in')) * ((f-t) / this.getAttr('fade_in')));
+				this.mediaPlayer.setVolume(vol);
+			}
+			else if(this.getAttr('fade_out') > 0 && t > g )
+			{
+				vol = this.getAttr('volume') * (1.0-((t-g) / this.getAttr('fade_out') ))*(1.0-((t-g)/this.getAttr('fade_out') ));
+				this.mediaPlayer.setVolume(vol);
+			}
+			else if(Math.abs(this.getAttr('volume') - this.mediaPlayer.getVolume())>0.01)
+			{
+				this.mediaPlayer.setVolume(this.getAttr('volume'));
+			}
+			// send updates to the player. must include the layer info incase there are > 1 media layers on a single frame
+			var info = {
+				id : this.model.id,
+				media_type : this.getAttr('media_type'),
+				layer_type : this.getAttr('layer_type'),
+				current_time : this.mediaPlayer.getCurrentTime()
+			};
+			this.model.trigger('media_timeupdate', info);
 		}
-		
+
 	});
+
+	Layer.Vimeo = Layer.Video.extend();
+	Layer.Vimeo.Visual = Layer.Video.Visual.extend();
 
 	return Layer;
 
@@ -110,24 +134,6 @@ function(Zeega, _Layer, MediaPlayer){
 
 
 	Layer.Views.Visual.Video = Layer.Views.Visual.extend({
-		
-		draggable : true,
-		linkable : true,
-		
-		render : function()
-		{
-			
-			var img = $('<img>')
-				.attr('id', 'video-player-'+ this.model.id)
-				.attr('src', this.attr.thumbnail_url)
-				.css({'width':'100%'});
-
-			$(this.el).html( img ).css('height', this.attr.height+'%');
-			
-			return this;
-		},
-		
-		onLayerEnter : function(){},
 		
 		onLayerExit : function()
 		{
@@ -166,47 +172,6 @@ function(Zeega, _Layer, MediaPlayer){
 			this.model.player.pause();
 		},
 		
-		
-		onEnded : function()
-		{
-		
-		
-		},
-		
-		onTimeUpdate : function()
-		{
-			//Fades
-			
-			if(this.model.get('attr').cue_out==0) var out = this.model.player.getDuration();
-			else var out = this.model.get('attr').cue_out;
-			var t = this.model.player.getCurrentTime();
-			var f = parseFloat(this.model.get('attr').cue_in)+parseFloat(this.model.get('attr').fade_in);
-			var g = out-parseFloat(this.model.get('attr').fade_out);
-			
-			
-			if(this.model.get('attr').fade_in>0 && t<f)
-			{
-				var vol =this.model.get('attr').volume*(1.0-((f-t)/this.model.get('attr').fade_in)*((f-t)/this.model.get('attr').fade_in));
-				this.model.player.setVolume(vol);
-			}
-			
-			else if(this.model.get('attr').fade_out>0 && t>g)
-			{
-				var vol =this.model.get('attr').volume*(1.0-((t-g)/this.model.get('attr').fade_out))*(1.0-((t-g)/this.model.get('attr').fade_out));
-				this.model.player.setVolume(vol);
-			}
-			else if(Math.abs(this.model.get('attr').volume-this.model.player.getVolume())>.01)
-			{
-				this.model.player.setVolume(this.model.get('attr').volume);
-			}
-
-			
-			
-			
-		},
-		
-		
-		
 		onUnrender : function()
 		{
 			
@@ -215,14 +180,6 @@ function(Zeega, _Layer, MediaPlayer){
 		}
 		
 	});
-	
-	Layer.Youtube = Layer.Video.extend();
-	Layer.Views.Controls.Youtube = Layer.Views.Controls.Video.extend();
-	Layer.Views.Visual.Youtube = Layer.Views.Visual.Video.extend();
-	
-	Layer.Vimeo = Layer.Video.extend();
-	Layer.Views.Controls.Vimeo = Layer.Views.Controls.Video.extend();
-	Layer.Views.Visual.Vimeo = Layer.Views.Visual.Video.extend();
 
 })(zeega.module("layer"));
 
