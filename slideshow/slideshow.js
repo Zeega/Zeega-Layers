@@ -1,6 +1,6 @@
 define([
 	"zeega",
-	'zeega_layers/_layer/_layer'
+	'zeega_dir/plugins/layers/_layer/_layer'
 ],
 
 function(Zeega, _Layer){

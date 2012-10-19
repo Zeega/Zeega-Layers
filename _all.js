@@ -7,11 +7,11 @@ this should be auto generated probably!!
 */
 
 define([
-	'zeega_layers/image/image',
-	'zeega_layers/link/link',
-	'zeega_layers/slideshow/slideshow',
-	'zeega_layers/video/video',
-	'zeega_layers/audio/audio'		
+	'zeega_dir/plugins/layers/image/image',
+	'zeega_dir/plugins/layers/link/link',
+	'zeega_dir/plugins/layers/slideshow/slideshow',
+	'zeega_dir/plugins/layers/video/video',
+	'zeega_dir/plugins/layers/audio/audio'		
 ],
 	function(
 		image,

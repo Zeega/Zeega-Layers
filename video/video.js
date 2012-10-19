@@ -1,8 +1,8 @@
 define([
 	"zeega",
-	'zeega_layers/_layer/_layer',
+	'zeega_dir/plugins/layers/_layer/_layer',
 
-	'modules/plugins/media-player/media-player'
+	'zeega_dir/plugins/media-player/media-player'
 ],
 
 function(Zeega, _Layer, MediaPlayer){
@@ -45,7 +45,6 @@ function(Zeega, _Layer, MediaPlayer){
 			//	media_target : '#layer-visual-'+this.id,
 			//	controls_target : '#media-controls-'+this.id
 			//})
-			console.log('init media player', MediaPlayer);
 		},
 
 		onPlay : function()
@@ -73,7 +72,6 @@ function(Zeega, _Layer, MediaPlayer){
 					control_mode : 'none',
 					media_target : '#layer-visual-'+ this.id
 				});
-				console.log('media player', this.mediaPlayer);
 				this.mediaPlayer.render();
 				this.$el.append( this.mediaPlayer.el );
 				this.mediaPlayer.placePlayer();
@@ -131,63 +129,3 @@ function(Zeega, _Layer, MediaPlayer){
 	return Layer;
 
 });
-
-/*
-
-(function(Layer){
-
-
-	Layer.Views.Visual.Video = Layer.Views.Visual.extend({
-		
-		onLayerExit : function()
-		{
-			console.log('@@@		on layer exit')
-			if( this.model.player_loaded ) this.model.player.destroy();
-			this.model.player_loaded = false;
-			
-			//must call this if you extend onLayerExit
-			this.model.trigger('editor_readyToRemove')
-		},
-		
-		onControlsOpen : function()
-		{
-			console.log('video controls open : visual')
-			var _this = this;
-			if( !this.model.player_loaded )
-			{
-				this.model.initPlayer();
-				this.$el.html(this.model.player.render().el);
-				this.model.player.placePlayer();
-				console.log('on controls open',this, this.model.player)
-				
-				this.model.player_loaded = true;
-			}
-			else
-			{
-				this.model.player.pause();
-			}
-			
-		
-			//replace with the actual video object
-		},
-		
-		onControlsClosed : function()
-		{
-			this.model.player.pause();
-		},
-		
-		onUnrender : function()
-		{
-			
-			this.model.player.pause();
-			this.model.destroy();	
-		}
-		
-	});
-
-})(zeega.module("layer"));
-
-*/
-
-
-
