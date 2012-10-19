@@ -126,6 +126,11 @@ function(){
 
 		},
 
+		updateZIndex : function( z )
+		{
+			this.$el.css('z-index', z);
+		},
+
 
 		editor_onLayerEnter : function(){},
 		editor_onLayerExit : function(){},

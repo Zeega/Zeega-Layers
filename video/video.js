@@ -122,6 +122,9 @@ function(Zeega, _Layer, MediaPlayer){
 
 	});
 
+	Layer.Youtube = Layer.Video.extend();
+	Layer.Youtube.Visual = Layer.Video.Visual.extend();
+
 	Layer.Vimeo = Layer.Video.extend();
 	Layer.Vimeo.Visual = Layer.Video.Visual.extend();
 
