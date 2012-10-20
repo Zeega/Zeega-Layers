@@ -1,10 +1,10 @@
 define([
-	"plugins/backbone.layoutmanager"
+	"zeega"
 ],
 
-function(){
+function(Zeega){
 
-	_Layer = Backbone.Model.extend({
+	_Layer = Zeega.Backbone.Model.extend({
 		
 		layerType : null,
 
@@ -43,7 +43,7 @@ function(){
 
 	});
 
-	_Layer.Visual = Backbone.LayoutView.extend({
+	_Layer.Visual = Zeega.Backbone.LayoutView.extend({
 		
 		className : 'visual-element',
 		template : '',
