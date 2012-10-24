@@ -84,7 +84,10 @@ function(Zeega){
 		{
 			this.className = this._className +' '+ this.className;
 			this.beforePlayerRender();
-			$('.ZEEGA-player-window').append( this.el );
+
+			if(this.model.get('target_div') !== '' ) $('#'+ this.model.get('target_div') +' .ZEEGA-player-window').append( this.el );
+			else $('.ZEEGA-player-window').append( this.el );
+			
 			this.$el.addClass('visual-element-'+ this.model.get('type').toLowerCase() );
 			this.moveOffStage();
 			this.applySize();
