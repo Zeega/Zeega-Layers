@@ -70,7 +70,7 @@ function(Zeega, _Layer, MediaPlayer){
 				this.mediaPlayer = new MediaPlayer.Views.Player({
 					model:this.model,
 					control_mode : 'none',
-					media_target : '#layer-visual-'+ this.id
+					media_target : '#visual-element-'+ this.id
 				});
 				this.$el.append( this.mediaPlayer.el );
 				this.mediaPlayer.render();
