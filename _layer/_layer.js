@@ -48,18 +48,14 @@ function(Zeega){
 		fetch: function(path) {
 			// Initialize done for use in async-mode
 			var done;
-
 			// Concatenate the file extension.
 			path = 'app/templates/'+ path + ".html";
-			console.log('fetch layer path', path);
-
 			// If cached, use the compiled template.
 			if (JST[path]) {
 				return JST[path];
 			} else {
 				// Put fetch into `async-mode`.
 				done = this.async();
-
 				// Seek out the template asynchronously.
 				return $.ajax({ url: Zeega.root + path }).then(function(contents) {
 					done(JST[path] = _.template(contents));
@@ -74,9 +70,7 @@ function(Zeega){
 
 		initialize : function()
 		{
-			
 			this.init();
-
 		},
 
 		beforePlayerRender : function(){},
@@ -85,16 +79,13 @@ function(Zeega){
 			this.className = this._className +' '+ this.className;
 			this.beforePlayerRender();
 
-			console.log(this.model.get('target_div'));
 			if(this.model.get('target_div') !== '' && !_.isNull(this.model.get('target_div')) )
 			{
 				$('#'+ this.model.get('target_div') +' .ZEEGA-player-window').append( this.el );
-				console.log('draw into div', '#'+ this.model.get('target_div') +' .ZEEGA-player-window');
 			}
 			else
 			{
 				$('.ZEEGA-player-window').append( this.el );
-				console.log('draw into window');
 			}
 			this.$el.addClass('visual-element-'+ this.model.get('type').toLowerCase() );
 			this.moveOffStage();
