@@ -113,7 +113,8 @@ function(Zeega, _Layer, MediaPlayer){
 				id : this.model.id,
 				media_type : this.getAttr('media_type'),
 				layer_type : this.getAttr('layer_type'),
-				current_time : this.mediaPlayer.getCurrentTime()
+				current_time : this.mediaPlayer.getCurrentTime(),
+				duration : this.mediaPlayer.getDuration()
 			};
 			this.model.trigger('media_timeupdate', info);
 		}
