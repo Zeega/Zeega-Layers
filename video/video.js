@@ -26,6 +26,7 @@ function(Zeega, _Layer, MediaPlayer){
 			'fade_in' : 0,
 			'fade_out' : 0,
 			'dissolve': false,
+			'loop' : false,
 			'opacity':1,
 			'dimension':1.5,
 			'citation':true
@@ -36,6 +37,9 @@ function(Zeega, _Layer, MediaPlayer){
 	Layer.Video.Visual = _Layer.Visual.extend({
 		
 		template : 'plugins/video',
+
+		ended : false,
+		playbackCount : 0,
 
 		init : function()
 		{
@@ -49,6 +53,7 @@ function(Zeega, _Layer, MediaPlayer){
 
 		onPlay : function()
 		{
+			this.ended = false;
 			this.mediaPlayer.play();
 		},
 
@@ -76,6 +81,8 @@ function(Zeega, _Layer, MediaPlayer){
 				this.mediaPlayer.render();
 				this.mediaPlayer.placePlayer();
 				this.mediaPlayer.popcorn.listen('timeupdate', function(){ _this.onTimeUpdate(); });
+				this.model.on('media_ended', function(){ _this.onEnded(); });
+
 				this.mediaPlayer_loaded = true;
 			}
 			else
@@ -86,37 +93,56 @@ function(Zeega, _Layer, MediaPlayer){
 
 		onTimeUpdate : function()
 		{
-			//Fades
-			var out,vol;
-			if( this.getAttr('cue_out') === 0 ) out = this.model.player.getDuration();
-			else out = this.getAttr('cue_out');
-			var t = this.mediaPlayer.getCurrentTime();
-			var f = parseFloat(this.getAttr('cue_in'))+parseFloat(this.getAttr('fade_in'));
-			var g = out - parseFloat(this.getAttr('fade_out'));
+			if(!this.ended)
+			{
+				//Fades
+				var out,vol;
+				if( this.getAttr('cue_out') === 0 || this.getAttr('cue_out') === null ) out = this.mediaPlayer.getDuration();
+				else out = this.getAttr('cue_out');
+				var t = this.mediaPlayer.getCurrentTime();
+				var f = parseFloat(this.getAttr('cue_in'))+parseFloat(this.getAttr('fade_in'));
+				var g = out - parseFloat(this.getAttr('fade_out'));
 
-			if(this.getAttr('fade_in') > 0 && t < f )
-			{
-				vol = this.getAttr('volume') *(1.0-((f-t)/this.getAttr('fade_in')) * ((f-t) / this.getAttr('fade_in')));
-				this.mediaPlayer.setVolume(vol);
+				if(this.getAttr('fade_in') > 0 && t < f )
+				{
+					vol = this.getAttr('volume') *(1.0-((f-t)/this.getAttr('fade_in')) * ((f-t) / this.getAttr('fade_in')));
+					this.mediaPlayer.setVolume(vol);
+				}
+				else if(this.getAttr('fade_out') > 0 && t > g )
+				{
+					//vol = this.getAttr('volume') * (1.0-((t-g) / this.getAttr('fade_out') ))*(1.0-((t-g)/this.getAttr('fade_out') ));
+					//this.mediaPlayer.setVolume(vol);
+				}
+				else if(Math.abs(this.getAttr('volume') - this.mediaPlayer.getVolume())>0.01)
+				{
+					this.mediaPlayer.setVolume(this.getAttr('volume'));
+				}
+				// send updates to the player. must include the layer info incase there are > 1 media layers on a single frame
+				var info = {
+					id : this.model.id,
+					media_type : this.getAttr('media_type'),
+					layer_type : this.getAttr('layer_type'),
+					current_time : this.mediaPlayer.getCurrentTime(),
+					duration : this.mediaPlayer.getDuration()
+				};
+				this.model.trigger('media_timeupdate', info);
+				if( this.mediaPlayer.getCurrentTime() >= out ) this.onEnded();
 			}
-			else if(this.getAttr('fade_out') > 0 && t > g )
+		},
+
+		onEnded : function()
+		{
+			this.playbackCount++;
+			this.model.trigger('playback_ended', this.model.toJSON() );
+			if(this.getAttr('loop'))
 			{
-				vol = this.getAttr('volume') * (1.0-((t-g) / this.getAttr('fade_out') ))*(1.0-((t-g)/this.getAttr('fade_out') ));
-				this.mediaPlayer.setVolume(vol);
+				this.mediaPlayer.currentTime( this.getAttr('cue_in') );
+				this.mediaPlayer.play();
 			}
-			else if(Math.abs(this.getAttr('volume') - this.mediaPlayer.getVolume())>0.01)
+			else
 			{
-				this.mediaPlayer.setVolume(this.getAttr('volume'));
+				this.ended = true;
 			}
-			// send updates to the player. must include the layer info incase there are > 1 media layers on a single frame
-			var info = {
-				id : this.model.id,
-				media_type : this.getAttr('media_type'),
-				layer_type : this.getAttr('layer_type'),
-				current_time : this.mediaPlayer.getCurrentTime(),
-				duration : this.mediaPlayer.getDuration()
-			};
-			this.model.trigger('media_timeupdate', info);
 		}
 
 	});
