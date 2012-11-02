@@ -82,7 +82,7 @@ function(Zeega, _Layer){
 
 		scrollTo : function( slideNo )
 		{
-			this.$el.animate({left: (slideNo * -100)+'%'});
+			this.$('.slideshow-container').animate({left: (slideNo * -100)+'%'});
 			this.emitSlideData(slideNo);
 		},
 
