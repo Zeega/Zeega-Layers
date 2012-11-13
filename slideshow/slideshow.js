@@ -14,6 +14,7 @@ function(Zeega, _Layer){
 		defaultAttributes : {
 			'arrows' : true, // turns on/off visual arrow controls
 			'keyboard' : false, // turns on/off keyboard controls
+			'thumbnails' : true, // turns on/off thumbnail drawer
 
 			'title' : 'Slideshow Layer',
 			'url' : 'none',
@@ -36,6 +37,8 @@ function(Zeega, _Layer){
 		init : function()
 		{
 			this.slideCount = this.model.get('attr').slides.length;
+			this.model.on('slideshow_switch-frame', this.scrollTo, this);
+			Zeega.on('resize_window', this.positionArrows, this);
 		},
 
 		serialize : function(){ return this.model.toJSON(); },
@@ -46,6 +49,14 @@ function(Zeega, _Layer){
 			this.hideArrows();
 			this.initKeyboard();
 			this.emitSlideData( this.slide );
+			this.positionArrows();
+		},
+
+		onRender : function()
+		{
+			this.thumbSlider = new SSSlider({model:this.model});
+			this.$el.append( this.thumbSlider.el );
+			this.thumbSlider.render();
 		},
 
 		onExit : function()
@@ -54,7 +65,7 @@ function(Zeega, _Layer){
 		},
 
 		events : {
-			'click  .slideshow-left-arrow' : 'goLeft', 
+			'click  .slideshow-left-arrow' : 'goLeft',
 			'click  .slideshow-right-arrow' : 'goRight'
 		},
 
@@ -88,7 +99,12 @@ function(Zeega, _Layer){
 
 		emitSlideData : function(slideNo)
 		{
-			this.model.trigger('slideshow_update',this.getAttr('slides')[slideNo] );
+			this.model.trigger('slideshow_update', { slideNum: slideNo, data: this.getAttr('slides')[slideNo] } );
+		},
+
+		positionArrows : function()
+		{
+			this.$('.slideshow-arrow').css('top', (window.innerHeight/2 - 50) +'px');
 		},
 
 		hideArrows : function()
@@ -123,6 +139,82 @@ function(Zeega, _Layer){
 			if( this.getAttr('keyboard') ) $(window).unbind('keyup.slideshow');
 		}
 		
+	});
+
+	var SSSlider = _Layer.LayoutView.extend({
+
+		slide : 0,
+		slidePos : 0,
+
+		className : 'slideshow-slider',
+
+		template : 'plugins/slideshowthumbslider',
+
+		initialize : function()
+		{
+			var _this = this;
+			this.slideNum = this.model.get('attr').slides.length;
+			this.model.on('slideshow_update', function(slide){ _this.highlightThumb(slide.slideNum);}, this );
+			Zeega.on('resize_window', this.onResize, this);
+		},
+
+		serialize : function()
+		{
+			return this.model.toJSON();
+		},
+
+		afterRender : function()
+		{
+			this.onResize();
+		},
+
+		onResize : function()
+		{
+			this.$el.css('top', (window.innerHeight-this.$el.height()) +'px');
+		},
+
+		events : {
+			'click li a' : 'onClickThumb',
+			'click .slideshow-control-prev' : 'prev',
+			'click .slideshow-control-next' : 'next'
+		},
+
+		prev : function()
+		{
+			if(this.slidePos > 0)
+			{
+				this.slidePos--;
+				this.$('ul').animate({ 'left': this.slidePos*-171+'px' });
+			}
+			return false;
+		},
+
+		next : function()
+		{
+			if(this.slidePos < this.slideNum-1 )
+			{
+				this.slidePos++;
+				this.$('ul').animate({ 'left': this.slidePos*-171+'px' });
+			}
+			return false;
+		},
+
+		onClickThumb : function(e)
+		{
+			var slideNum = $(e.target).closest('a').data('slidenum');
+			this.highlightThumb(slideNum);
+			this.model.trigger('slideshow_switch-frame',slideNum);
+			return false;
+		},
+
+		highlightThumb : function(num)
+		{
+			this.slide = num;
+			this.$('li').removeClass('active');
+			$(this.$('li')[num]).addClass('active');
+		}
+		
+
 	});
 
 	return Layer;

@@ -1,0 +1,13 @@
+<a href='#' class='arrow arrow-left slideshow-control-prev'></a>
+<a href='#' class='arrow arrow-right slideshow-control-next'></a>
+
+<ul>
+	<% _.each(attr.slides, function(slide, i){ %>
+		<li>
+			<a href='#' data-slidenum="<%= i %>">
+				<div class='slideshow-thumbnail' style="background:url(<%= slide.attr.uri %>); background-repeat:no-repeat;background-size:100%;background-position:center"></div>
+				<div class='thumb-title'><% if(slide.attr.title.replace(/\s+/g, '') != ''){ %><%= slide.attr.title %><% }else{ %>untitled<% } %></div>
+			</a>
+		</li>
+	<% });%>
+</ul>
