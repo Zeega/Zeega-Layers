@@ -160,6 +160,7 @@ function(Zeega, _Layer){
 
 		serialize : function()
 		{
+			console.log('asldkjfa;slfjasd;f',this.model.toJSON());
 			return this.model.toJSON();
 		},
 
@@ -174,7 +175,8 @@ function(Zeega, _Layer){
 		},
 
 		events : {
-			'click li a' : 'onClickThumb',
+			'click a.slider-thumb' : 'onClickThumb',
+			'click a.trackback' : 'onClickTrackback',
 			'click .slideshow-control-prev' : 'prev',
 			'click .slideshow-control-next' : 'next'
 		},
@@ -204,6 +206,11 @@ function(Zeega, _Layer){
 			var slideNum = $(e.target).closest('a').data('slidenum');
 			this.highlightThumb(slideNum);
 			this.model.trigger('slideshow_switch-frame',slideNum);
+			return false;
+		},
+
+		onClickTrackback : function()
+		{
 			return false;
 		},
 
