@@ -1,4 +1,90 @@
 // slideshow.less
+@largeArrowColor: #fff;
+@largeArrowHoverColor: orange;
+@largeArrowOpacity: 0.85;
+@largeArrowHoverOpacity: 1;
+@largeArrowThickness: 10px;
+@largeArrowSize: 60px;
+
+@smallArrowColor: #fff;
+@smallArrowHoverColor: orange;
+@smallArrowOpacity: 0.5;
+@smallArrowHoverOpacity: 1;
+@smallArrowThickness: 5px;
+@smallArrowSize: 30px;
+
+.nav-arrow (@height:30px, @thickness: 10px, @color:#fff, @colorHover:orange, @opacity: 0.5, @opacityHover: 1)
+{
+	display:inline-block;
+	height:@height;
+	border-left: @thickness solid;
+	border-top: @thickness solid;
+	border-color: @color;
+	opacity: @opacity;
+	position: absolute;
+	transition: opacity 0.5s;
+	-moz-transition: opacity 0.5s; /* Firefox 4 */
+	-webkit-transition: opacity 0.5s; /* Safari and Chrome */
+	-o-transition: opacity 0.5s; /* Opera */
+	transition: border-color 0.5s;
+	-moz-transition: border-color 0.5s; /* Firefox 4 */
+	-webkit-transition: border-color 0.5s; /* Safari and Chrome */
+	-o-transition: border-color 0.5s; /* Opera */
+	width:@height;
+	z-index:100;
+
+	box-shadow: 0 0 50px transparent;
+
+	&:hover
+	{
+		border-color: @colorHover;
+		transition: border-color 0.5s;
+		-moz-transition: border-color 0.5s; /* Firefox 4 */
+		-webkit-transition: border-color 0.5s; /* Safari and Chrome */
+		-o-transition: border-color 0.5s; /* Opera */
+		opacity: @opacityHover;
+		transition: opacity 0.5s;
+		-moz-transition: opacity 0.5s; /* Firefox 4 */
+		-webkit-transition: opacity 0.5s; /* Safari and Chrome */
+		-o-transition: opacity 0.5s; /* Opera */
+
+	}
+
+	&.arrow-left
+	{
+		left:15px;
+		transform:rotate(-45deg);
+		-ms-transform:rotate(-45deg); /* IE 9 */
+		-moz-transform:rotate(-45deg); /* Firefox */
+		-webkit-transform:rotate(-45deg); /* Safari and Chrome */
+		-o-transform:rotate(-45deg); /* Opera */
+
+		-webkit-filter: drop-shadow(-4px 4px 4px rgba(0,0,0,0.5));
+
+		&:hover
+		{
+			-webkit-filter: drop-shadow(-8px 8px 6px rgba(0,0,0,0.5));
+		}
+	}
+	&.arrow-right
+	{
+		right:15px;
+		transform:rotate(135deg);
+		-ms-transform:rotate(135deg); /* IE 9 */
+		-moz-transform:rotate(135deg); /* Firefox */
+		-webkit-transform:rotate(135deg); /* Safari and Chrome */
+		-o-transform:rotate(135deg); /* Opera */
+
+		-webkit-filter: drop-shadow(4px -4px 4px rgba(0,0,0,0.5));
+		&:hover
+		{
+			-webkit-filter: drop-shadow(8px -8px 6px rgba(0,0,0,0.5));
+		}
+	}
+}
+
+
+
 
 .slideshow-container
 {
@@ -15,28 +101,8 @@
 
 .slideshow-arrow
 {
-	position:absolute;
-	z-index:2;
-	opacity:1;
-	transition: opacity 0.5s;
-	-moz-transition: opacity 0.5s; /* Firefox 4 */
-	-webkit-transition: opacity 0.5s; /* Safari and Chrome */
-	-o-transition: opacity 0.5s; /* Opera */
-
-	&.slideshow-right-arrow
-	{
-		right:0;
-	}
-	&.slideshow-left-arrow
-	{
-		left:0;
-		transform:rotate(180deg);
-		-ms-transform:rotate(180deg); /* IE 9 */
-		-moz-transform:rotate(180deg); /* Firefox */
-		-webkit-transform:rotate(180deg); /* Safari and Chrome */
-		-o-transform:rotate(180deg); /* Opera */
-	}
-
+	.nav-arrow (@largeArrowSize,@largeArrowThickness, @largeArrowColor, @largeArrowHoverColor,@largeArrowOpacity, @largeArrowHoverOpacity);
+	
 	&.disabled
 	{
 		opacity:0.0;
@@ -54,7 +120,7 @@
 	z-index: 30;
 	height:150px;
 	background: rgba(0,0,0,0.5);
-	padding:10px;
+	padding:10px 0;
 	color:white;
 	font-family:'Helvetica', sans-serif;
 	font-weight:lighter;
@@ -109,49 +175,11 @@
 
 	.arrow
 	{
-		display:inline-block;
-		height:30px;
-		width:30px;
-		border-left: 10px solid;
-		border-top: 10px solid;
-		border-color: #fff;
-		transition: border-color 0.5s;
-		-moz-transition: border-color 0.5s; /* Firefox 4 */
-		-webkit-transition: border-color 0.5s; /* Safari and Chrome */
-		-o-transition: border-color 0.5s; /* Opera */
+		.nav-arrow (@smallArrowSize,@smallArrowThickness, @smallArrowColor, @smallArrowHoverColor,@smallArrowOpacity, @smallArrowHoverOpacity);
 
-		// amm specific
-		position: absolute;
 		top: 30%;
 		z-index: 2;
-
-		&:hover
-		{
-			border-color: orange;
-			transition: border-color 0.5s;
-			-moz-transition: border-color 0.5s; /* Firefox 4 */
-			-webkit-transition: border-color 0.5s; /* Safari and Chrome */
-			-o-transition: border-color 0.5s; /* Opera */
-		}
 	}
 
-	.arrow-left
-	{
-		transform:rotate(-45deg);
-		-ms-transform:rotate(-45deg); /* IE 9 */
-		-moz-transform:rotate(-45deg); /* Firefox */
-		-webkit-transform:rotate(-45deg); /* Safari and Chrome */
-		-o-transform:rotate(-45deg); /* Opera */
-	}
-	.arrow-right
-	{
-		transform:rotate(135deg);
-		-ms-transform:rotate(135deg); /* IE 9 */
-		-moz-transform:rotate(135deg); /* Firefox */
-		-webkit-transform:rotate(135deg); /* Safari and Chrome */
-		-o-transform:rotate(135deg); /* Opera */
-
-		right:32px;
-	}
 }
 

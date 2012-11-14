@@ -65,8 +65,8 @@ function(Zeega, _Layer){
 		},
 
 		events : {
-			'click  .slideshow-left-arrow' : 'goLeft',
-			'click  .slideshow-right-arrow' : 'goRight'
+			'click  .slideshow-control-prev' : 'goLeft',
+			'click  .slideshow-control-next' : 'goRight'
 		},
 
 		goLeft : function()
@@ -110,9 +110,9 @@ function(Zeega, _Layer){
 		hideArrows : function()
 		{
 			if( this.slideCount <= 1 )						this.$('.slideshow-arrow').remove();
-			else if( this.slide === 0 )						this.$('.slideshow-left-arrow').addClass('disabled');
-			else if( this.slide == this.slideCount - 1 )	this.$('.slideshow-right-arrow').addClass('disabled');
-			else											this.$('.slideshow-left-arrow, .slideshow-right-arrow').removeClass('disabled');
+			else if( this.slide === 0 )						this.$('.slideshow-control-prev').addClass('disabled');
+			else if( this.slide == this.slideCount - 1 )	this.$('.slideshow-control-next').addClass('disabled');
+			else											this.$('.slideshow-control-prev, .slideshow-control-next').removeClass('disabled');
 		},
 
 		initKeyboard : function()
@@ -177,8 +177,8 @@ function(Zeega, _Layer){
 		events : {
 			'click a.slider-thumb' : 'onClickThumb',
 			'click a.trackback' : 'onClickTrackback',
-			'click .slideshow-control-prev' : 'prev',
-			'click .slideshow-control-next' : 'next'
+			'click .slideshow-slider-control-prev' : 'prev',
+			'click .slideshow-slider-control-next' : 'next'
 		},
 
 		prev : function()
