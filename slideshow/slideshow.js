@@ -76,7 +76,6 @@ function(Zeega, _Layer, SSSlider){
 			{
 				this.slide--;
 				this.scrollTo(this.slide);
-				this.hideArrows();
 			}
 			return false;
 		},
@@ -87,13 +86,14 @@ function(Zeega, _Layer, SSSlider){
 			{
 				this.slide++;
 				this.scrollTo(this.slide);
-				this.hideArrows();
 			}
 			return false;
 		},
 
 		scrollTo : function( slideNo )
 		{
+			this.slide = slideNo;
+			this.hideArrows();
 			this.$('.slideshow-container').animate({left: (slideNo * -100)+'%'});
 			this.emitSlideData(slideNo);
 		},
