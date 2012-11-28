@@ -17,6 +17,9 @@ function(Zeega, _Layer, SSSlider){
 			'keyboard' : false, // turns on/off keyboard controls
 			'thumbnail_slider' : true, // turns on/off thumbnail drawer
 
+			'start_frame_order' : 4,
+			'start_frame_id' : null,
+
 			'title' : 'Slideshow Layer',
 			'url' : 'none',
 			'left' : 0,
@@ -25,6 +28,11 @@ function(Zeega, _Layer, SSSlider){
 			'width' : 100,
 			'opacity':1,
 			'aspect':1.33
+		},
+
+		init: function()
+		{
+			console.log('init ss layer model', this);
 		}
 
 	});
@@ -37,6 +45,7 @@ function(Zeega, _Layer, SSSlider){
 
 		init : function()
 		{
+			console.log('init ss layer', this);
 			this.slideCount = this.model.get('attr').slides.length;
 			this.model.on('slideshow_switch-frame', this.scrollTo, this);
 			Zeega.on('resize_window', this.positionArrows, this);

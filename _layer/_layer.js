@@ -11,7 +11,7 @@ function(Zeega){
 		controls : [],
 
 		defaults : {
-			citataion: true,
+			citation: true,
 			default_controls : true,
 			draggable : true,
 			has_controls : true,
@@ -24,6 +24,7 @@ function(Zeega){
 
 		initialize : function()
 		{
+			this.defaults = _.extend(this.defaults, this.defaultAttributes);
 			this.init();
 		},
 
