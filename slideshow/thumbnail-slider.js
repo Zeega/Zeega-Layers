@@ -57,7 +57,8 @@ function(Zeega, _Layer){
 
 		next : function()
 		{
-			if(this.slidePos < this.slideNum-1 )
+			// check slider position offset 
+			if(this.slidePos < this.slideNum-1 && (this.$('ul').offset().left + this.$('ul').width()) > window.innerWidth )
 			{
 				this.slidePos++;
 				this.$('ul').animate({ 'left': this.slidePos*-171+'px' });
