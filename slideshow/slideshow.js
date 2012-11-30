@@ -17,7 +17,7 @@ function(Zeega, _Layer, SSSlider){
 			'keyboard' : false, // turns on/off keyboard controls
 			'thumbnail_slider' : true, // turns on/off thumbnail drawer
 
-			'start_frame_order' : 4,
+			'start_frame_order' : null,
 			'start_frame_id' : null,
 
 			'title' : 'Slideshow Layer',
@@ -28,11 +28,6 @@ function(Zeega, _Layer, SSSlider){
 			'width' : 100,
 			'opacity':1,
 			'aspect':1.33
-		},
-
-		init: function()
-		{
-			console.log('init ss layer model', this);
 		}
 
 	});
@@ -45,7 +40,6 @@ function(Zeega, _Layer, SSSlider){
 
 		init : function()
 		{
-			console.log('init ss layer', this);
 			this.slideCount = this.model.get('attr').slides.length;
 			this.model.on('slideshow_switch-frame', this.scrollTo, this);
 			Zeega.on('resize_window', this.positionArrows, this);
@@ -60,6 +54,22 @@ function(Zeega, _Layer, SSSlider){
 			this.initKeyboard();
 			this.emitSlideData( this.slide );
 			this.positionArrows();
+
+			if( this.model.get('start_frame_order'))
+			{
+				this.scrollTo( this.model.get('start_frame_order'));
+				this.model.set({'start_frame_order':null},{silent:true});
+			}
+			else if( this.model.get('start_frame_id'))
+			{
+				var slideIDArray = _.map( this.model.get('attr').slides ,function(slide){
+					return parseInt(slide.id,10);
+				});
+				var index = _.indexOf(slideIDArray,this.model.get('start_frame_id'));
+				this.scrollTo( index );
+				this.model.set({'start_frame_id':null},{silent:true});
+				
+			}
 		},
 
 		onRender : function()
@@ -67,6 +77,7 @@ function(Zeega, _Layer, SSSlider){
 			this.thumbSlider = new SSSlider({model:this.model});
 			this.$el.append( this.thumbSlider.el );
 			this.thumbSlider.render();
+			
 		},
 
 		onExit : function()
