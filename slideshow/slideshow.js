@@ -54,7 +54,6 @@ function(Zeega, _Layer, SSSlider){
 			this.initKeyboard();
 			this.emitSlideData( this.slide );
 			this.positionArrows();
-
 			if( this.model.get('start_frame_order'))
 			{
 				this.scrollTo( this.model.get('start_frame_order'));
