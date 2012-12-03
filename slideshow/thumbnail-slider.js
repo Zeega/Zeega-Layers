@@ -50,7 +50,7 @@ function(Zeega, _Layer){
 			if(this.slidePos > 0)
 			{
 				this.slidePos--;
-				this.$('ul').animate({ 'left': this.slidePos*-171+'px' });
+				this.$('ul').stop().animate({ 'left': this.slidePos*-171+'px' });
 			}
 			return false;
 		},
@@ -61,7 +61,7 @@ function(Zeega, _Layer){
 			if(this.slidePos < this.slideNum-1 && (this.$('ul').offset().left + this.$('ul').width()) > window.innerWidth )
 			{
 				this.slidePos++;
-				this.$('ul').animate({ 'left': this.slidePos*-171+'px' });
+				this.$('ul').stop().animate({ 'left': this.slidePos*-171+'px' });
 			}
 			return false;
 		},

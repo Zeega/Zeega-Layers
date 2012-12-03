@@ -113,7 +113,7 @@ function(Zeega, _Layer, SSSlider){
 		{
 			this.slide = slideNo;
 			this.hideArrows();
-			this.$('.slideshow-container').animate({left: (slideNo * -100)+'%'});
+			this.$('.slideshow-container')stop().animate({left: (slideNo * -100)+'%'});
 			this.emitSlideData(slideNo);
 		},
 
