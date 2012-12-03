@@ -17,8 +17,8 @@ function(Zeega, _Layer, SSSlider){
 			'keyboard' : false, // turns on/off keyboard controls
 			'thumbnail_slider' : true, // turns on/off thumbnail drawer
 
-			'start_frame_order' : null,
-			'start_frame_id' : null,
+			'start_slide' : null,
+			'start_slide_id' : null,
 
 			'title' : 'Slideshow Layer',
 			'url' : 'none',
@@ -54,19 +54,19 @@ function(Zeega, _Layer, SSSlider){
 			this.initKeyboard();
 			this.emitSlideData( this.slide );
 			this.positionArrows();
-			if( this.model.get('start_frame_order'))
+			if( this.model.get('start_slide'))
 			{
-				this.scrollTo( this.model.get('start_frame_order'));
-				this.model.set({'start_frame_order':null},{silent:true});
+				this.scrollTo( this.model.get('start_slide'));
+				this.model.set({'start_slide':null},{silent:true});
 			}
-			else if( this.model.get('start_frame_id'))
+			else if( this.model.get('start_slide_id'))
 			{
 				var slideIDArray = _.map( this.model.get('attr').slides ,function(slide){
 					return parseInt(slide.id,10);
 				});
-				var index = _.indexOf(slideIDArray,this.model.get('start_frame_id'));
+				var index = _.indexOf(slideIDArray,this.model.get('start_slide_id'));
 				this.scrollTo( index );
-				this.model.set({'start_frame_id':null},{silent:true});
+				this.model.set({'start_slide_id':null},{silent:true});
 				
 			}
 		},
