@@ -4,15 +4,15 @@
 <ul>
 	<% _.each(attr.slides, function(slide, i){ %>
 		<li>
-			<a href='#' class='slider-thumb' data-slidenum="<%= i %>">
-				<div class='slideshow-thumbnail' style="background:url(<%= slide.attr.uri %>); background-repeat:no-repeat;background-size:100%;background-position:center"></div>
-			</a>
-			<div class='thumb-title'>
-				<a href="<%= slide.attr.attribution_uri %>" target='blank'>
-					<% if(slide.attr.media_creator_username.replace(/\s+/g, '') != ''){ %><%= slide.attr.media_creator_username %><% }else{ %>unknown<% } %>
-					<i class='slideshow-icon-<%= slide.attr.archive.toLowerCase() %> ssarchive'></i>
-				</a>
-			</div>
+			<div class='slideshow-thumbnail' style="background:url(<%= slide.attr.uri %>); background-repeat:no-repeat;background-size:100%;background-position:center">
+				<a href='#' class='slider-thumb' data-slidenum="<%= i %>"></a>
+				<div class='thumb-title'>
+					<a href="<%= slide.attr.attribution_uri %>" target='blank'>
+						<% if(slide.attr.media_creator_username.replace(/\s+/g, '') != ''){ %><%= slide.attr.media_creator_username %><% }else{ %>unknown<% } %>
+						<i class='slideshow-icon-<%= slide.attr.archive.toLowerCase() %> ssarchive'></i>
+					</a>
+				</div>
+			</div>			
 		</li>
 	<% });%>
 </ul>
