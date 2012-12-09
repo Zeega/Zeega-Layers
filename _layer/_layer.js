@@ -104,7 +104,7 @@ function(Zeega){
 		applySize : function()
 		{
 			this.$el.css({
-				//height : this.getAttr('height') +'%', // photos need a height!
+				height : this.getAttr('height') +'%', // photos need a height!
 				width : this.getAttr('width') +'%'
 			});
 		},

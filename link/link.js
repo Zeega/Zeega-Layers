@@ -96,7 +96,7 @@ function(Zeega, _Layer){
 		
 		goClick : function()
 		{
-			this.model.trigger('cue_frame', this.getAttr('to_frame') );
+			this.model.relay.set( 'current_frame', this.getAttr('to_frame') );
 			return false;
 		}
 		
