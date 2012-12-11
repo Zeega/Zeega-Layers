@@ -35,20 +35,21 @@ function(Zeega, _Layer) {
     template: 'plugins/link',
 
     serialize: function() {
+      console.log('link layer', this.model);
       return this.model.toJSON();
     },
     
     beforePlayerRender: function() {
       var _this = this,
         style = {
-          'overflow': 'visible',
-          'z-index': 100,
-          'border': 'none',
           'border-radius': '0',
           'height': this.getAttr('height') + '%',
-          'background': 'red',
-          'opacity': 0.1
+          'background': this.getAttr('backgroundColor'),
+          'opacity': this.getAttr('opacity'),
+          'box-shadow': '0 0 10px rgba(255,255,255,'+ this.getAttr('opacity') +')'
         };
+
+      this.$el.attr('data-glowOnHover', this.getAttr('glow_on_hover') );
 /*
       this.$el.removeClass('link-arrow-right link-arrow-down link-arrow-up link-arrow-left');
 
@@ -71,7 +72,7 @@ function(Zeega, _Layer) {
         });
       }
 */
-      this.$el.css( style );
+      this.$('.ZEEGA-link-inner').css( style );
     },
     
     events: {
@@ -81,13 +82,11 @@ function(Zeega, _Layer) {
     },
 
     onMouseOver: function() {
-      //console.log('link on mouseover');
-      //this.$el.stop().fadeTo( 500, this.model.get('attr').opacity_hover );
+      this.$el.stop().fadeTo( 500, this.getAttr('opacity_hover') );
     },
 
     onMouseOut: function() {
-      //console.log('link on mouseover');
-      //this.$el.stop().fadeTo( 500, this.model.get('attr').opacity );
+      this.$el.stop().fadeTo( 500, this.getAttr('opacity') );
     },
     
     goClick: function() {
