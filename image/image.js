@@ -1,74 +1,76 @@
 define([
-	"zeega",
-	'zeega_dir/plugins/layers/_layer/_layer',
-
-	//plugins
-	'plugins/jquery.imagesloaded.min'
+  "zeega",
+  'zeega_dir/plugins/layers/_layer/_layer',
+  //plugins
+  'plugins/jquery.imagesloaded.min'
 ],
 
-function(Zeega, _Layer){
+function( Zeega, _Layer ){
 
-	var Layer = Zeega.module();
+  var Layer = Zeega.module();
 
-	Layer.Image = _Layer.extend({
-			
-		layerType : 'Image',
+  Layer.Image = _Layer.extend({
+      
+    layerType: 'Image',
 
-		defaultAttributes : {
-			'title' : 'Image Layer',
-			'url' : 'none',
-			'left' : 0,
-			'top' : 0,
-			'height' : 100,
-			'width' : 100,
-			'opacity':1,
-			'aspect':1.33
-		},
+    defaultAttributes: {
+      'title': 'Image Layer',
+      'url': 'none',
+      'left': 0,
+      'top': 0,
+      'height': 100,
+      'width': 100,
+      'opacity': 1,
+      'aspect': 1.33
+    },
 
-		controls : [
-			
-			{
-				type : 'checkbox',
-				property : 'dissolve',
-				label : 'Fade In'
-			},
-			{
-				type : 'slider',
-				property : 'width',
-				label : 'Scale',
-				suffix : '%',
-				min : 1,
-				max : 200
-			},
-			{
-				type : 'slider',
-				property : 'opacity',
-				label : 'Scale',
-				step : 0.01,
-				min : 0.05,
-				max : 1
-			}
+    controls : [
+      {
+        type: 'checkbox',
+        property: 'dissolve',
+        label: 'Fade In'
+      },
+      {
+        type: 'slider',
+        property: 'width',
+        label: 'Scale',
+        suffix: '%',
+        min: 1,
+        max: 200
+      },
+      {
+        type: 'slider',
+        property: 'opacity',
+        label: 'Scale',
+        step: 0.01,
+        min: 0.05,
+        max: 1
+      }
+    ]
 
-		]
+  });
 
-	});
+  Layer.Image.Visual = _Layer.Visual.extend({
+    
+    template: 'plugins/image',
 
-	Layer.Image.Visual = _Layer.Visual.extend({
-		
-		template : 'plugins/image',
+    serialize: function() {
+      return this.model.toJSON();
+    },
+    
+    verifyReady: function() {
+      var _this = this,
+        img = this.$el.imagesLoaded();
 
-		serialize : function(){ return this.model.toJSON(); },
-		
-		verifyReady : function()
-		{
-			var _this = this;
-			var img = this.$el.imagesLoaded();
-			img.done(function(){ _this.model.trigger('visual_ready',_this.model.id); });
-			img.fail(function(){ _this.model.trigger('visual_error',_this.model.id); });
-		}
-		
-	});
+      img.done(function() {
+        _this.model.trigger('visual_ready',_this.model.id);
+      });
+      img.fail(function() {
+        _this.model.trigger('visual_error',_this.model.id);
+      });
+    }
+    
+  });
 
-	return Layer;
-
+  return Layer;
 });
