@@ -72,7 +72,7 @@ function( Zeega, _Layer, SSSlider ) {
 
                 index = this.model.get("attr").slides.map(function( slide ) {
                     return +slide.id;
-                }.indexOf( startSlideId );
+                }).indexOf( startSlideId );
 
                 this.scrollTo( index );
                 this.model.set({ "start_slide_id": null }, { silent: true });
