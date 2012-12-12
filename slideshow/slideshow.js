@@ -1,160 +1,176 @@
 define([
-  "zeega",
-  'zeega_dir/plugins/layers/_layer/_layer',
-  'zeega_dir/plugins/layers/slideshow/thumbnail-slider'
+    "zeega",
+    "zeega_dir/plugins/layers/_layer/_layer",
+    "zeega_dir/plugins/layers/slideshow/thumbnail-slider"
 ],
 
-function(Zeega, _Layer, SSSlider) {
+function( Zeega, _Layer, SSSlider ) {
 
-  var Layer = Zeega.module();
+    var Layer = Zeega.module();
 
-  Layer.SlideShow = _Layer.extend({
-      
-    layerType : 'SlideShow',
+    Layer.SlideShow = _Layer.extend({
 
-    defaultAttributes : {
-      'arrows': true, // turns on/off visual arrow controls
-      'keyboard': false, // turns on/off keyboard controls
-      'thumbnail_slider': true, // turns on/off thumbnail drawer
+        layerType: "SlideShow",
 
-      'start_slide': null,
-      'start_slide_id': null,
+        // TODO: Invetigate rationale for quoting property names
+        // as strings...
+        // (appears throughout both Zeega-Player and Zeega-Layers)
+        defaultAttributes: {
+            "arrows": true, // turns on/off visual arrow controls
+            "keyboard": false, // turns on/off keyboard controls
+            "thumbnail_slider": true, // turns on/off thumbnail drawer
 
-      'title': 'Slideshow Layer',
-      'url': 'none',
-      'left': 0,
-      'top': 0,
-      'height': 100,
-      'width': 100,
-      'opacity': 1,
-      'aspect': 1.33
-    }
-  });
+            "start_slide": null,
+            "start_slide_id": null,
 
-  Layer.SlideShow.Visual = _Layer.Visual.extend({
-    
-    template: 'plugins/slideshow',
+            "title": "Slideshow Layer",
+            "url": "none",
+            "left": 0,
+            "top": 0,
+            "height": 100,
+            "width": 100,
+            "opacity": 1,
+            "aspect": 1.33
+        }
+    });
 
-    slide: 0,
+    Layer.SlideShow.Visual = _Layer.Visual.extend({
 
-    init: function() {
-      this.slideCount = this.model.get('attr').slides.length;
-      this.model.on('slideshow_switch-frame', this.scrollTo, this);
-      Zeega.on('resize_window', this.positionArrows, this);
-    },
+        template: "plugins/slideshow",
 
-    serialize: function() {
-      return this.model.toJSON();
-    },
+        slide: 0,
 
-    onPlay: function() {
-      this.$el.css({ 'height': '100%' });
-      this.hideArrows();
-      this.initKeyboard();
-      this.emitSlideData( this.slide );
-      this.positionArrows();
-      if( this.model.get('start_slide')) {
-        this.scrollTo( this.model.get('start_slide'));
-        this.model.set({'start_slide':null},{silent:true});
-      } else if( this.model.get('start_slide_id')) {
-        var slideIDArray = _.map( this.model.get('attr').slides, function( slide ) {
-            return parseInt(slide.id,10);
-          }),
-          index = _.indexOf(slideIDArray,this.model.get('start_slide_id'));
+        init: function() {
+            this.slideCount = this.model.get("attr").slides.length;
+            this.model.on("slideshow_switch-frame", this.scrollTo, this);
+            Zeega.on("resize_window", this.positionArrows, this);
+        },
 
-        this.scrollTo( index );
-        this.model.set({ 'start_slide_id': null }, { silent: true });
-      }
-    },
+        serialize: function() {
+            return this.model.toJSON();
+        },
 
-    onRender: function() {
-      this.thumbSlider = new SSSlider({ model: this.model });
-      this.$el.append( this.thumbSlider.el );
-      this.thumbSlider.render();
-    },
+        onPlay: function() {
+            var index,
+                startSlide = this.model.get("start_slide"),
+                startSlideId = this.model.get("start_slide_id");
 
-    onExit: function() {
-      this.killKeyboard();
-    },
+            this.$el.css({ "height": "100%" });
+            this.hideArrows();
+            this.initKeyboard();
+            this.emitSlideData( this.slide );
+            this.positionArrows();
 
-    events: {
-      'click  .slideshow-control-prev' : 'goLeft',
-      'click  .slideshow-control-next' : 'goRight'
-    },
+            // Specifically test for null to avoid false positives
+            // when startSlide is zero
+            if ( startSlide !== null ) {
 
-    goLeft: function() {
-      
-      if( this.slide > 0 ) {
-        this.slide--;
-        this.scrollTo(this.slide);
-      }
-      return false;
-    },
+                this.scrollTo( startSlide );
+                this.model.set({ "start_slide": null }, { silent: true });
 
-    goRight: function() {
+            } else if ( startSlideId !== null ) {
 
-      if( this.slide < this.slideCount -1 ) {
-        this.slide++;
-        this.scrollTo(this.slide);
-      }
-      return false;
-    },
+                index = this.model.get("attr").slides.map(function( slide ) {
+                    return +slide.id;
+                }.indexOf( startSlideId );
 
-    scrollTo: function( slideNo ) {
+                this.scrollTo( index );
+                this.model.set({ "start_slide_id": null }, { silent: true });
+            }
+        },
 
-      this.slide = slideNo;
-      this.hideArrows();
-      this.$('.slideshow-container').stop().animate({ left: (slideNo * -100)+'%' });
-      this.emitSlideData( slideNo );
-    },
+        onRender: function() {
+            this.thumbSlider = new SSSlider({ model: this.model });
+            this.$el.append( this.thumbSlider.el );
+            this.thumbSlider.render();
+        },
 
-    emitSlideData: function(slideNo) {
-      this.model.trigger('slideshow_update', { slideNum: slideNo, data: this.getAttr('slides')[slideNo] } );
-    },
+        onExit: function() {
+            this.killKeyboard();
+        },
 
-    positionArrows: function() {
-      this.$('.slideshow-arrow').css('top', (window.innerHeight/2 - 50) +'px');
-    },
+        events: {
+            "click  .slideshow-control-prev": "goLeft",
+            "click  .slideshow-control-next": "goRight"
+        },
 
-    hideArrows: function() {
+        goLeft: function() {
 
-      if( this.slideCount <= 1 ) {
-        this.$('.slideshow-arrow').remove();
-      } else if( this.slide === 0 ) {
-        this.$('.slideshow-control-prev').addClass('disabled');
-      } else if( this.slide == this.slideCount - 1 ) {
-        this.$('.slideshow-control-next').addClass('disabled');
-      } else {
-        this.$('.slideshow-control-prev, .slideshow-control-next').removeClass('disabled');
-      }
-    },
+            if ( this.slide > 0 ) {
+                this.slide--;
+                this.scrollTo(this.slide);
+            }
+            return false;
+        },
 
-    initKeyboard: function() {
+        goRight: function() {
 
-      if( this.getAttr('keyboard') ) {
-        var _this = this;
+            if ( this.slide < this.slideCount -1 ) {
+                this.slide++;
+                this.scrollTo(this.slide);
+            }
+            return false;
+        },
 
-        $(window).bind('keyup.slideshow', function( e ) {
-          switch( e.which ) {
-            case 37: // left arrow
-              _this.goLeft();
-              break;
-            case 39: // right arrow
-              _this.goRight();
-              break;
-          }
-        });
-      }
-    },
+        scrollTo: function( slideNo ) {
 
-    killKeyboard: function() {
-      
-      if( this.getAttr('keyboard') ) {
-        $(window).unbind('keyup.slideshow');
-      }
-    }
-    
-  });
+            this.slide = slideNo;
+            this.hideArrows();
+            this.$(".slideshow-container").stop().animate({
+                left: (slideNo * -100)+"%"
+            });
+            this.emitSlideData( slideNo );
+        },
 
-  return Layer;
+        emitSlideData: function(slideNo) {
+            this.model.trigger("slideshow_update", {
+                slideNum: slideNo,
+                data: this.getAttr("slides")[slideNo]
+            });
+        },
+
+        positionArrows: function() {
+            this.$(".slideshow-arrow").css(
+                "top", (window.innerHeight / 2 - 50) + "px"
+            );
+        },
+
+        hideArrows: function() {
+
+            if ( this.slideCount <= 1 ) {
+                this.$(".slideshow-arrow").remove();
+            } else if( this.slide === 0 ) {
+                this.$(".slideshow-control-prev").addClass("disabled");
+            } else if( this.slide == this.slideCount - 1 ) {
+                this.$(".slideshow-control-next").addClass("disabled");
+            } else {
+                this.$(".slideshow-control-prev, .slideshow-control-next")
+                    .removeClass("disabled");
+            }
+        },
+
+        initKeyboard: function() {
+            if ( this.getAttr("keyboard") ) {
+
+                $(window).on("keyup.slideshow", function( e ) {
+                    switch( e.which ) {
+                        case 37: // left arrow
+                            _this.goLeft();
+                            break;
+                        case 39: // right arrow
+                            _this.goRight();
+                        break;
+                    }
+                });
+            }
+        },
+
+        killKeyboard: function() {
+            if ( this.getAttr("keyboard") ) {
+                $(window).off("keyup.slideshow");
+            }
+        }
+    });
+
+    return Layer;
 });

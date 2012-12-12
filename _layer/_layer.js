@@ -1,209 +1,243 @@
 define([
-  "zeega"
+    "zeega"
 ],
 
 function( Zeega ) {
 
-  _Layer = Zeega.Backbone.Model.extend({
-    
-    layerType: null,
+    _Layer = Zeega.Backbone.Model.extend({
 
-    controls: [],
+        layerType: null,
 
-    defaults: {
-      citation: true,
-      default_controls: true,
-      draggable: true,
-      has_controls: true,
-      linkable: true,
-      mode: 'player',
-      resizable: false
-    },
+        controls: [],
 
-    defaultAttributes: {},
+        defaults: {
+            citation: true,
+            default_controls: true,
+            draggable: true,
+            has_controls: true,
+            linkable: true,
+            mode: "player",
+            resizable: false
+        },
 
-    initialize: function() {
-      this.defaults = _.extend( this.defaults, this.defaultAttributes );
-      this.init();
-    },
+        defaultAttributes: {},
 
-    init: function(){},
+        initialize: function() {
+            this.defaults = _.extend( this.defaults, this.defaultAttributes );
+            this.init();
+        },
 
-    player_onPreload: function(){},
-    player_onPlay: function(){},
-    player_onPause: function(){},
-    player_onExit: function(){},
-    player_onUnrender: function(){},
-    player_onRenderError: function(){},
+        init: function() {},
 
-    editor_onLayerEnter: function(){},
-    editor_onLayerExit: function(){},
-    editor_onControlsOpen: function(){},
-    editor_onControlsClosed: function(){}
-  });
+        player_onPreload: function() {},
+        player_onPlay: function() {},
+        player_onPause: function() {},
+        player_onExit: function() {},
+        player_onUnrender: function() {},
+        player_onRenderError: function() {},
 
-  _Layer.Visual = Zeega.Backbone.LayoutView.extend({
-    
-    className: 'visual-element',
-    template: '',
+        editor_onLayerEnter: function() {},
+        editor_onLayerExit: function() {},
+        editor_onControlsOpen: function() {},
+        editor_onControlsClosed: function() {}
+    });
 
-    fetch: function( path ) {
-      // Initialize done for use in async-mode
-      var done;
-      // Concatenate the file extension.
-      path = 'app/templates/'+ path + ".html";
-      // If cached, use the compiled template.
-      if ( JST[path] ) {
-        return JST[path];
-      } else {
-        // Put fetch into `async-mode`.
-        done = this.async();
-        // Seek out the template asynchronously.
-        return $.ajax({ url: Zeega.root + path }).then(function( contents ) {
-          done(JST[path] = _.template( contents ));
-        });
-      }
-    },
+    _Layer.Visual = Zeega.Backbone.LayoutView.extend({
 
-    serialize: function() { return this.model.toJSON(); },
+        className: "visual-element",
+        template: "",
 
-    initialize: function() {
-      this.init();
-    },
+        fetch: function( path ) {
+            // Initialize done for use in async-mode
+            var done;
+            // Concatenate the file extension.
+            path = "app/templates/" + path + ".html";
+            // If cached, use the compiled template.
+            if ( JST[ path ] ) {
+                return JST[ path ];
+            } else {
+                // Put fetch into `async-mode`.
+                done = this.async();
+                // Seek out the template asynchronously.
+                return $.ajax({ url: Zeega.root + path }).then(function( contents ) {
+                    done(
+                      JST[ path ] = _.template( contents )
+                    );
+                });
+            }
+        },
 
-    beforePlayerRender: function(){},
-    beforeRender: function() {
-      this.className = this._className +' '+ this.className;
-      this.beforePlayerRender();
+        serialize: function() { return this.model.toJSON(); },
 
-      if(this.model.get('target_div') !== '' && !_.isNull(this.model.get('target_div')) ) {
-        $('#'+ this.model.get('target_div') +' .ZEEGA-player-window').append( this.el );
-      } else {
-        $('.ZEEGA-player-window').append( this.el );
-      }
-      this.$el.addClass( 'visual-element-'+ this.model.get('type').toLowerCase() );
-      this.moveOffStage();
-      this.applySize();
-    },
+        initialize: function() {
+            this.init();
+        },
 
-    afterRender: function() {
-      this.verifyReady();
-      this.onRender();
-    },
+        beforePlayerRender: function() {},
+        beforeRender: function() {
+            var target = this.model.get("target_div"),
+                selector = (target ? "#" + target + " " : "") +
+                    ".ZEEGA-player-window";
 
-    onRender: function(){},
+            this.className = this._className + " " + this.className;
+            this.beforePlayerRender();
 
-    applySize: function() {
-      this.$el.css({
-        height: this.getAttr('height') +'%', // photos need a height!
-        width: this.getAttr('width') +'%'
-      });
-    },
+            $( selector ).append( this.el );
 
-    init: function(){},
-    render: function(){},
+            this.$el.addClass( "visual-element-" + this.model.get("type").toLowerCase() );
+            this.moveOffStage();
+            this.applySize();
+        },
 
-    // default verify fxn. return ready immediately
-    verifyReady: function(){ this.model.trigger('visual_ready', this.model.id ); },
+        afterRender: function() {
+            this.verifyReady();
+            this.onRender();
+        },
 
-    player_onPreload: function() {
-      this.render();
-    },
+        onRender: function() {},
 
-    player_onPlay: function() {
-      this.onPlay();
-    },
+        applySize: function() {
+            this.$el.css({
+                height: this.getAttr("height") + "%", // photos need a height!
+                width: this.getAttr("width") + "%"
+            });
+        },
 
-    player_onPause: function() {
-      this.onPause();
-    },
+        init: function() {},
+        render: function() {},
 
-    player_onExit: function() {
-      this.pause();
-      this.moveOffStage();
-      this.onExit();
-    },
+        // default verify fxn. return ready immediately
+        verifyReady: function() {
+            this.model.trigger("visual_ready", this.model.id );
+        },
 
-    player_onUnrender: function(){},
-    player_onRenderError: function(){},
+        player_onPreload: function() {
+            this.render();
+        },
 
-    onPreload: function(){},
-    onPlay: function(){},
-    onPause: function(){},
-    onExit: function(){},
+        player_onPlay: function() {
+            this.onPlay();
+        },
 
-    updateZIndex: function( z ) {
-      this.$el.css('z-index', z);
-    },
+        player_onPause: function() {
+            this.onPause();
+        },
 
-    editor_onLayerEnter: function(){},
-    editor_onLayerExit: function(){},
-    editor_onControlsOpen: function(){},
-    editor_onControlsClosed: function(){},
+        player_onExit: function() {
+            this.pause();
+            this.moveOffStage();
+            this.onExit();
+        },
 
-    moveOffStage: function() {
-      this.$el.css({
-        top: '-1000%',
-        left: '-1000%'
-      });
-    },
+        player_onUnrender: function() {},
+        player_onRenderError: function() {},
 
-    moveOnStage: function() {
-      this.$el.css({
-        top: this.getAttr('top') + '%',
-        left: this.getAttr('left') + '%'
-      });
-    },
+        onPreload: function() {},
+        onPlay: function() {},
+        onPause: function() {},
+        onExit: function() {},
 
-    play: function() {
-      this.isPlaying = true;
-      this.moveOnStage();
-      this.player_onPlay();
-    },
+        /*
+        TODO: Why is this special cased?
+        if there is a need for shorthanding, then I suggest writing
+        a "macro" to define many of these at initial run time:
 
-    pause: function() {
-      this.isPlaying = false;
-      this.player_onPause();
-    },
+        (function( global ) {
+          var rdashAlpha = /-([\da-z])/gi,
+              camelCase = function( string ) {
+                return string.replace( rdashAlpha, function( all, letter ) {
+                  return letter.toUpperCase();
+                });
+              };
 
-    playPause: function() {
-      if( this.isPlaying !== false ) {
-        this.isPlaying = false;
-        this.player_onPause();
-      } else {
-        this.isPlaying = true;
-        this.player_onPlay();
-      }
-    },
+          // Fake API
+          global.Util = [
+            // example list of properties to create shorthand setter api for
+            "z-index", "background-color", "height", "width"
+          ].reduce(function( api, property ) {
+            var camel = camelCase( "set-" + property );
 
-    // convenience fxn
-    getAttr: function( key ) {
-      return this.model.get('attr')[key];
-    }
+            api[ camel ] = function( value ) {
+              console.log( "Set " + property + " to: " + value );
+            };
 
-  });
+            return api;
+          }, {});
 
-  _Layer.LayoutView = Zeega.Backbone.LayoutView.extend({
-    
-    fetch: function( path ) {
-      // Initialize done for use in async-mode
-      var done;
-      // Concatenate the file extension.
-      path = 'app/templates/'+ path + ".html";
-      // If cached, use the compiled template.
-      if (JST[path]) {
-        return JST[path];
-      } else {
-        // Put fetch into `async-mode`.
-        done = this.async();
-        // Seek out the template asynchronously.
-        return $.ajax({ url: Zeega.root + path }).then(function( contents ) {
-          done(JST[path] = _.template( contents ));
-        });
-      }
-    }
-  });
+        }( this ));
 
-  return _Layer;
+        */
+        updateZIndex: function( z ) {
+            this.$el.css("z-index", z);
+        },
 
+        editor_onLayerEnter: function() {},
+        editor_onLayerExit: function() {},
+        editor_onControlsOpen: function() {},
+        editor_onControlsClosed: function() {},
+
+        moveOffStage: function() {
+            this.$el.css({
+                top: "-1000%",
+                left: "-1000%"
+            });
+        },
+
+        moveOnStage: function() {
+            this.$el.css({
+                top: this.getAttr("top") + "%",
+                left: this.getAttr("left") + "%"
+            });
+        },
+
+        play: function() {
+            this.isPlaying = true;
+            this.moveOnStage();
+            this.player_onPlay();
+        },
+
+        pause: function() {
+            this.isPlaying = false;
+            this.player_onPause();
+        },
+
+        playPause: function() {
+            if ( this.isPlaying !== false ) {
+                this.isPlaying = false;
+                this.player_onPause();
+            } else {
+                this.isPlaying = true;
+                this.player_onPlay();
+            }
+        },
+
+        // convenience fxn
+        getAttr: function( key ) {
+            return this.model.get("attr")[key];
+        }
+
+    });
+
+    _Layer.LayoutView = Zeega.Backbone.LayoutView.extend({
+
+        fetch: function( path ) {
+            // Initialize done for use in async-mode
+            var done;
+            // Concatenate the file extension.
+            path = "app/templates/"+ path + ".html";
+            // If cached, use the compiled template.
+            if (JST[path]) {
+                return JST[path];
+            } else {
+                // Put fetch into `async-mode`.
+                done = this.async();
+                // Seek out the template asynchronously.
+                return $.ajax({ url: Zeega.root + path }).then(function( contents ) {
+                    done(JST[path] = _.template( contents ));
+                });
+            }
+        }
+    });
+
+    return _Layer;
 });
