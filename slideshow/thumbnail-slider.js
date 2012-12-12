@@ -35,7 +35,7 @@ function( Zeega, _Layer ) {
         },
 
         onResize: function() {
-            this.$el.css("top", (window.innerHeight-this.$el.height()) +"px");
+            this.$el.css("top", (this.$el.closest('.ZEEGA-player').height() - this.$el.height()) +"px");
         },
 
         events: {

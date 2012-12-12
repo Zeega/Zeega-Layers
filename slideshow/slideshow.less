@@ -120,17 +120,18 @@
 }
 
 .slideshow-slider {
-  position: absolute;
-  font-size: 11px;
-  z-index: 30;
-  height:120px;
   background: rgba(0,0,0,0.5);
-  padding: 10px 0;
+  bottom: 0;
   color: white;
   font-family: 'Helvetica', sans-serif;
+  font-size: 11px;
   font-weight: lighter;
-  width: 100%;
+  height:120px;
   overflow: hidden;
+  padding: 10px 0;
+  position: absolute;
+  width: 100%;
+  z-index: 30;
 
   &:after {
     content: "";
@@ -154,8 +155,8 @@
       }
 
       .slideshow-thumbnail {
-        height: 100px;
-        width: 166px;
+        height: 50px;
+        width: 75px;
         background-size: auto 110%;
         background-position: center;
         position: relative;
