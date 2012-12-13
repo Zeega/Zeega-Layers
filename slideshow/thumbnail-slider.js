@@ -14,13 +14,10 @@ function( Zeega, _Layer ) {
         template: "plugins/slideshowthumbslider",
 
         initialize: function() {
-            // TODO: If the target platforms are modern, there is no need to
-            // use this-aliasing. Investigate rationale, remove if possible.
-            var _this = this;
 
             this.slideNum = this.model.get("attr").slides.length;
             this.model.on("slideshow_update", function( slide ) {
-                _this.highlightThumb(slide.slideNum);
+                this.highlightThumb( slide.slideNum );
             }, this );
 
             Zeega.on("resize_window", this.onResize, this );
@@ -30,9 +27,19 @@ function( Zeega, _Layer ) {
             return this.model.toJSON();
         },
 
-        afterRender: function(){
+        afterRender: function() {
             this.onResize();
+            this.makeDraggable();
             this.sinkThumbSlider();
+        },
+
+        makeDraggable: function() {
+            var dragWidth = -this.$(".slideshow-thumb-wrapper ul").width() + window.innerWidth - 10;
+
+            this.$(".slideshow-thumb-wrapper ul").draggable({
+                axis: 'x',
+                containment: [ dragWidth - window.innerWidth / 2 , 0, window.innerWidth / 2, 0 ]
+            });
         },
 
         onResize: function() {
@@ -103,14 +110,19 @@ function( Zeega, _Layer ) {
         },
 
         highlightThumb: function( num ) {
-            var $li = this.$("li");
+            var leftPosition = 0,
+                $li = this.$("li"),
+                $active = $li.eq(num);
 
             this.slide = num;
             $li.removeClass("active");
-            // TODO: If num is zero-indexed, this could be written as:
-            // $li.eq(num).addClass("active");
-            // Which would elimate a trip through jQuery()
-            $( $li[num] ).addClass("active");
+            $active.addClass("active");
+
+            leftPosition = window.innerWidth / 2 - $active.position().left;
+
+            this.$(".slideshow-thumb-wrapper ul").stop().animate({
+                left: leftPosition
+            }, 250);
         }
   });
 

@@ -125,6 +125,7 @@ function( Zeega, _Layer, SSSlider ) {
 
         updateTitle: function( slideNo ) {
             var slide = this.model.get('attr').slides[slideNo];
+            
             this.$(".slide-meta").text( slide.attr.title );
         },
 

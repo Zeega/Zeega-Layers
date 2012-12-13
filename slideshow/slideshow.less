@@ -15,70 +15,6 @@
 @smallArrowThickness: 5px;
 @smallArrowSize: 15px;
 
-.nav-arrow ( @height:30px, @thickness: 10px, @color:#fff, @colorHover:orange, @opacity: 0.5, @opacityHover: 1 )
-{
-  display: inline-block;
-  height: @height;
-  border-left: @thickness solid;
-  border-top: @thickness solid;
-  border-color: @color;
-  box-shadow: 0 0 50px transparent;
-  opacity: @opacity;
-  position: absolute;
-  transition: opacity 0.5s;
-  -moz-transition: opacity 0.5s; /* Firefox 4 */
-  -webkit-transition: opacity 0.5s; /* Safari and Chrome */
-  -o-transition: opacity 0.5s; /* Opera */
-  transition: border-color 0.5s;
-  -moz-transition: border-color 0.5s; /* Firefox 4 */
-  -webkit-transition: border-color 0.5s; /* Safari and Chrome */
-  -o-transition: border-color 0.5s; /* Opera */
-  width:@height;
-  z-index:100;
-
-  &.arrow-left {
-    left:15px;
-    transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg); /* IE 9 */
-    -moz-transform: rotate(-45deg); /* Firefox */
-    -webkit-transform: rotate(-45deg); /* Safari and Chrome */
-    -o-transform: rotate(-45deg); /* Opera */
-    -webkit-filter: drop-shadow(-4px 4px 4px rgba(0,0,0,0.5));
-
-    &:hover {
-      -webkit-filter: drop-shadow(-8px 8px 6px rgba(0,0,0,0.5));
-    }
-  }
-
-  &.arrow-right {
-    right: 15px;
-    transform: rotate(135deg);
-    -ms-transform: rotate(135deg); /* IE 9 */
-    -moz-transform: rotate(135deg); /* Firefox */
-    -webkit-transform: rotate(135deg); /* Safari and Chrome */
-    -o-transform: rotate(135deg); /* Opera */
-
-    -webkit-filter: drop-shadow(4px -4px 4px rgba(0,0,0,0.5));
-    &:hover {
-      -webkit-filter: drop-shadow(8px -8px 6px rgba(0,0,0,0.5));
-    }
-  }
-
-  &:hover {
-    border-color: @colorHover;
-    transition: border-color 0.5s;
-    -moz-transition: border-color 0.5s; /* Firefox 4 */
-    -webkit-transition: border-color 0.5s; /* Safari and Chrome */
-    -o-transition: border-color 0.5s; /* Opera */
-    opacity: @opacityHover;
-    transition: opacity 0.5s;
-    -moz-transition: opacity 0.5s; /* Firefox 4 */
-    -webkit-transition: opacity 0.5s; /* Safari and Chrome */
-    -o-transition: opacity 0.5s; /* Opera */
-  }
-}
-
-
 [class^="slideshow-icon-"] {
   display: inline-block;
   width: 15px;
@@ -128,6 +64,7 @@
 
   .slide-meta {
     padding: 0 10px;
+    text-shadow: 1px 2px 4px black;
   }
 
   .slideshow-thumb-wrapper {
@@ -203,5 +140,70 @@
 
     top: 45%;
     z-index: 2;
+  }
+}
+
+
+
+.nav-arrow ( @height:30px, @thickness: 10px, @color:#fff, @colorHover:orange, @opacity: 0.5, @opacityHover: 1 )
+{
+  display: inline-block;
+  height: @height;
+  border-left: @thickness solid;
+  border-top: @thickness solid;
+  border-color: @color;
+  box-shadow: 0 0 50px transparent;
+  opacity: @opacity;
+  position: absolute;
+  transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s; /* Firefox 4 */
+  -webkit-transition: opacity 0.5s; /* Safari and Chrome */
+  -o-transition: opacity 0.5s; /* Opera */
+  transition: border-color 0.5s;
+  -moz-transition: border-color 0.5s; /* Firefox 4 */
+  -webkit-transition: border-color 0.5s; /* Safari and Chrome */
+  -o-transition: border-color 0.5s; /* Opera */
+  width:@height;
+  z-index:100;
+
+  &.arrow-left {
+    left:15px;
+    transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg); /* IE 9 */
+    -moz-transform: rotate(-45deg); /* Firefox */
+    -webkit-transform: rotate(-45deg); /* Safari and Chrome */
+    -o-transform: rotate(-45deg); /* Opera */
+    -webkit-filter: drop-shadow(-4px 4px 4px rgba(0,0,0,0.5));
+
+    &:hover {
+      -webkit-filter: drop-shadow(-8px 8px 6px rgba(0,0,0,0.5));
+    }
+  }
+
+  &.arrow-right {
+    right: 15px;
+    transform: rotate(135deg);
+    -ms-transform: rotate(135deg); /* IE 9 */
+    -moz-transform: rotate(135deg); /* Firefox */
+    -webkit-transform: rotate(135deg); /* Safari and Chrome */
+    -o-transform: rotate(135deg); /* Opera */
+
+    -webkit-filter: drop-shadow(4px -4px 4px rgba(0,0,0,0.5));
+    &:hover {
+      -webkit-filter: drop-shadow(8px -8px 6px rgba(0,0,0,0.5));
+    }
+  }
+
+  &:hover {
+    border-color: @colorHover;
+    transition: border-color 0.5s;
+    -moz-transition: border-color 0.5s; /* Firefox 4 */
+    -webkit-transition: border-color 0.5s; /* Safari and Chrome */
+    -o-transition: border-color 0.5s; /* Opera */
+    opacity: @opacityHover;
+    transition: opacity 0.5s;
+    -moz-transition: opacity 0.5s; /* Firefox 4 */
+    -webkit-transition: opacity 0.5s; /* Safari and Chrome */
+    -o-transition: opacity 0.5s; /* Opera */
   }
 }
