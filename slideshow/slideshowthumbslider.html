@@ -1,18 +1,20 @@
 <a href='#' class='arrow arrow-left slideshow-slider-control-prev'></a>
 <a href='#' class='arrow arrow-right slideshow-slider-control-next'></a>
-
-<ul>
-    <% _.each(attr.slides, function(slide, i){ %>
-        <li>
-            <div class='slideshow-thumbnail' style="background:url(<%= slide.attr.thumbnail_url %>); background-repeat:no-repeat;background-size:100%;background-position:center">
-                <a href='#' class='slider-thumb' data-slidenum="<%= i %>"></a>
-                <div class='thumb-title'>
-                    <a href="<%= slide.attr.attribution_uri %>" target='blank'>
-                        <% if(slide.attr.media_creator_username.replace(/\s+/g, '') != ''){ %><%= slide.attr.media_creator_username %><% }else{ %>unknown<% } %>
-                        <i class='slideshow-icon-<%= slide.attr.archive.toLowerCase() %> ssarchive'></i>
-                    </a>
+<div class='slide-meta'><%= attr.slides[0].attr.title %></div>
+<div class='slideshow-thumb-wrapper'>
+    <ul>
+        <% _.each(attr.slides, function(slide, i){ %>
+            <li>
+                <div class='slideshow-thumbnail' style="background:url(<%= slide.attr.thumbnail_url %>); background-repeat:no-repeat;background-size:100%;background-position:center">
+                    <a href='#' class='slider-thumb' data-slidenum="<%= i %>"></a>
+                    <div class='thumb-title'>
+                        <a href="<%= slide.attr.attribution_uri %>" target='blank'>
+                            <% if(slide.attr.media_creator_username.replace(/\s+/g, '') != ''){ %><%= slide.attr.media_creator_username %><% }else{ %>unknown<% } %>
+                            <i class='slideshow-icon-<%= slide.attr.archive.toLowerCase() %> ssarchive'></i>
+                        </a>
+                    </div>
                 </div>
-            </div>          
-        </li>
-    <% });%>
-</ul>
+            </li>
+        <% });%>
+    </ul>
+</div>

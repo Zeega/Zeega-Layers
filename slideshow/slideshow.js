@@ -119,7 +119,13 @@ function( Zeega, _Layer, SSSlider ) {
             this.$(".slideshow-container").stop().animate({
                 left: (slideNo * -100)+"%"
             });
+            this.updateTitle( slideNo );
             this.emitSlideData( slideNo );
+        },
+
+        updateTitle: function( slideNo ) {
+            var slide = this.model.get('attr').slides[slideNo];
+            this.$(".slide-meta").text( slide.attr.title );
         },
 
         emitSlideData: function(slideNo) {

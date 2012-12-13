@@ -32,6 +32,7 @@ function( Zeega, _Layer ) {
 
         afterRender: function(){
             this.onResize();
+            this.sinkThumbSlider();
         },
 
         onResize: function() {
@@ -42,7 +43,26 @@ function( Zeega, _Layer ) {
             "click a.slider-thumb": "onClickThumb",
             "click a.trackback": "onClickTrackback",
             "click .slideshow-slider-control-prev": "prev",
-            "click .slideshow-slider-control-next": "next"
+            "click .slideshow-slider-control-next": "next",
+
+            "mouseenter": "onMouseOver",
+            "mouseleave": "sinkThumbSlider"
+        },
+
+        onMouseOver: function() {
+            if ( this.sinkThumbsTimer ) {
+                clearTimeout( this.sinkThumbsTimer );
+            }
+            var newTop = this.$el.closest(".ZEEGA-player").height() - this.$el.height();
+            $(".slideshow-slider").animate({"top": newTop });
+        },
+
+        sinkThumbSlider: function() {
+            var _this = this;
+            this.sinkThumbsTimer = setTimeout(function() {
+                var newTop = _this.$el.closest(".ZEEGA-player").height() - _this.$el.height() + 70;
+                $(".slideshow-slider").animate({"top": newTop });
+            }, 2000 );
         },
 
         prev: function() {
