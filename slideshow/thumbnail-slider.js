@@ -1,9 +1,11 @@
 define([
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer"
+    "zeega_dir/plugins/layers/_layer/_layer",
+    "zeega_dir/plugins/layers/slideshow/slideshow-metadata"
+
 ],
 
-function( Zeega, _Layer ) {
+function( Zeega, _Layer, Metadata ) {
 
     var SSSlider = _Layer.LayoutView.extend({
 
@@ -17,6 +19,7 @@ function( Zeega, _Layer ) {
 
             this.slideNum = this.model.get("attr").slides.length;
             this.model.on("slideshow_update", function( slide ) {
+                this.onResize();
                 this.highlightThumb( slide.slideNum );
             }, this );
 
@@ -31,6 +34,10 @@ function( Zeega, _Layer ) {
             this.onResize();
             this.makeDraggable();
             this.sinkThumbSlider();
+
+            this.metadata = new Metadata.View({ model: this.model });
+            this.$el.prepend( this.metadata.el );
+            this.metadata.render();
         },
 
         makeDraggable: function() {

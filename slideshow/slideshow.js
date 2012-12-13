@@ -126,7 +126,8 @@ function( Zeega, _Layer, SSSlider ) {
         updateTitle: function( slideNo ) {
             var slide = this.model.get('attr').slides[slideNo];
 
-            this.$(".slide-meta").text( slide.attr.title );
+            this.$(".slide-title").text( slide.attr.title );
+            this.$(".slide-description").text( slide.attr.description );
         },
 
         emitSlideData: function(slideNo) {
@@ -138,9 +139,9 @@ function( Zeega, _Layer, SSSlider ) {
 
         positionArrows: function() {
             this.$(".slideshow-arrow").css({
-                top: (this.$el.closest(".ZEEGA-player-window").height() / 2 - 50) + "px",
-                height: (this.$el.closest(".ZEEGA-player-window").height() / 10 )+ "px",
-                width: (this.$el.closest(".ZEEGA-player-window").height() / 10 )+ "px"
+                top: (this.$el.closest(".ZEEGA-player").height() / 2 - 50) + "px",
+                height: (this.$el.closest(".ZEEGA-player").height() / 10 )+ "px",
+                width: (this.$el.closest(".ZEEGA-player").height() / 10 )+ "px"
             });
         },
 
