@@ -34,11 +34,13 @@ function( Zeega, _Layer ) {
         },
 
         makeDraggable: function() {
-            var dragWidth = -this.$(".slideshow-thumb-wrapper ul").width() + window.innerWidth - 10;
+            // TODO: make playerWidth an attribute of the player model
+            var playerWidth = this.$el.closest(".ZEEGA-player-window").width(),
+                dragWidth = -this.$(".slideshow-thumb-wrapper ul").width() + playerWidth - 10;
 
             this.$(".slideshow-thumb-wrapper ul").draggable({
                 axis: 'x',
-                containment: [ dragWidth - window.innerWidth / 2 , 0, window.innerWidth / 2, 0 ]
+                containment: [ dragWidth - playerWidth / 2 , 0, playerWidth / 2, 0 ]
             });
         },
 
@@ -88,7 +90,7 @@ function( Zeega, _Layer ) {
 
             // check slider position offset
             if ( this.slidePos < this.slideNum - 1 &&
-                    ($ul.offset().left + $ul.width()) > window.innerWidth ) {
+                    ($ul.offset().left + $ul.width()) > this.$el.closest(".ZEEGA-player").width() ) {
                 this.slidePos++;
                 $ul.stop().animate({
                     "left": this.slidePos * -171 + "px"
@@ -110,7 +112,8 @@ function( Zeega, _Layer ) {
         },
 
         highlightThumb: function( num ) {
-            var leftPosition = 0,
+            var playerWidth = this.$el.closest(".ZEEGA-player-window").width(),
+                leftPosition = 0,
                 $li = this.$("li"),
                 $active = $li.eq(num);
 
@@ -118,7 +121,7 @@ function( Zeega, _Layer ) {
             $li.removeClass("active");
             $active.addClass("active");
 
-            leftPosition = window.innerWidth / 2 - $active.position().left;
+            leftPosition = playerWidth / 2 - $active.position().left;
 
             this.$(".slideshow-thumb-wrapper ul").stop().animate({
                 left: leftPosition
