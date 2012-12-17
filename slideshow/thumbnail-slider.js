@@ -51,7 +51,7 @@ function( Zeega, _Layer, Metadata ) {
         },
 
         onResize: function() {
-            this.$el.css("bottom", "-20px");
+            this.$el.css("bottom", 0 );
         },
 
         events: {
@@ -68,13 +68,13 @@ function( Zeega, _Layer, Metadata ) {
             if ( this.sinkThumbsTimer ) {
                 clearTimeout( this.sinkThumbsTimer );
             }
-            $(".slideshow-slider").animate({"bottom": 50 });
+            $(".slideshow-slider").animate({"bottom": 0 });
         },
 
         sinkThumbSlider: function() {
             var _this = this;
             this.sinkThumbsTimer = setTimeout(function() {
-                $(".slideshow-slider").animate({"bottom": -20 });
+                $(".slideshow-slider").animate({"bottom": -70 });
             }, 2000 );
         },
 

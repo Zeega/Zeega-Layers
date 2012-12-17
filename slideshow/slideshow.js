@@ -22,6 +22,7 @@ function( Zeega, _Layer, SSSlider ) {
 
             "start_slide": null,
             "start_slide_id": null,
+            "slides_bleed": true,
 
             "title": "Slideshow Layer",
             "url": "none",
@@ -80,6 +81,7 @@ function( Zeega, _Layer, SSSlider ) {
         },
 
         onRender: function() {
+            this.$el.css("height", this.$el.closest(".ZEEGA-player").height() );
             this.thumbSlider = new SSSlider({ model: this.model });
             this.$el.append( this.thumbSlider.el );
             this.thumbSlider.render();
