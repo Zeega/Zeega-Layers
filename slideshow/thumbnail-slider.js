@@ -19,7 +19,6 @@ function( Zeega, _Layer, Metadata ) {
 
             this.slideNum = this.model.get("attr").slides.length;
             this.model.on("slideshow_update", function( slide ) {
-                this.onResize();
                 this.highlightThumb( slide.slideNum );
             }, this );
 
@@ -31,7 +30,7 @@ function( Zeega, _Layer, Metadata ) {
         },
 
         afterRender: function() {
-            this.onResize();
+            //this.onResize();
             this.makeDraggable();
             this.sinkThumbSlider();
 
@@ -52,7 +51,7 @@ function( Zeega, _Layer, Metadata ) {
         },
 
         onResize: function() {
-            this.$el.css("top", (this.$el.closest('.ZEEGA-player').height() - this.$el.height()) +"px");
+            this.$el.css("bottom", "-20px");
         },
 
         events: {
@@ -69,15 +68,13 @@ function( Zeega, _Layer, Metadata ) {
             if ( this.sinkThumbsTimer ) {
                 clearTimeout( this.sinkThumbsTimer );
             }
-            var newTop = this.$el.closest(".ZEEGA-player").height() - this.$el.height();
-            $(".slideshow-slider").animate({"top": newTop });
+            $(".slideshow-slider").animate({"bottom": 50 });
         },
 
         sinkThumbSlider: function() {
             var _this = this;
             this.sinkThumbsTimer = setTimeout(function() {
-                var newTop = _this.$el.closest(".ZEEGA-player").height() - _this.$el.height() + 70;
-                $(".slideshow-slider").animate({"top": newTop });
+                $(".slideshow-slider").animate({"bottom": -20 });
             }, 2000 );
         },
 
