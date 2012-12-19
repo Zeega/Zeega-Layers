@@ -130,6 +130,8 @@ function( Zeega, _Layer, MediaPlayer ) {
                 // send updates to the player. must include the layer
                 // info incase there are > 1 media layers on a single frame
                 var info = {
+                    cue_in: this.model.getAttr("cue_in"),
+                    cue_out: this.model.getAttr("cue_out"),
                     id: this.model.id,
                     media_type: this.getAttr("media_type"),
                     layer_type: this.getAttr("layer_type"),
