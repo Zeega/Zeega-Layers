@@ -13,7 +13,8 @@ define([
     "zeega_dir/plugins/layers/video/video",
     "zeega_dir/plugins/layers/audio/audio",
     "zeega_dir/plugins/layers/rectangle/rectangle",
-    "zeega_dir/plugins/layers/text/text"
+    "zeega_dir/plugins/layers/text/text",
+    "zeega_dir/plugins/layers/popup/popup"
 ],
 function(
     image,
@@ -22,7 +23,8 @@ function(
     video,
     audio,
     rectangle,
-    text
+    text,
+    popup
 ) {
     var Plugins = {};
     // extend the plugin object with all the layers
@@ -34,6 +36,7 @@ function(
         video,
         audio,
         rectangle,
-        text
+        text,
+        popup
     );
 });
