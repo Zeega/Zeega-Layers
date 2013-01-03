@@ -38,7 +38,6 @@ function( Zeega, _Layer, MediaPlayer ) {
 
         popLayer: function() {
             if ( this.model.get("attr").popup_content ) {
-                console.log('this', this)
                 this.popup = new PopupOverlay({
                     model: this.model,
                     template: "plugins/popup-" + this.model.get("attr").popup_content.media_type.toLowerCase()
