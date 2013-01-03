@@ -24,23 +24,19 @@ function( Zeega, _Layer ) {
 
     Layer.Text.Visual = _Layer.Visual.extend({
 
-        domAttributes: function() {
-            var style = "color: " + this.model.get("attr").color +"; font-size: " + this.model.get("attr").fontSize + "%;";
-            return {
-                style: style
-            };
-        },
-
         template: "plugins/text",
 
-        // TODO: This doesn"t produce a "serialization", perhaps rename
-        // to something more appropriate?
         serialize: function() {
             return this.model.toJSON();
         },
 
-        beforePlayerRender: function() {
+        onRender: function() {
 
+            // using jquery because it provides a few vendor prefix styles
+            this.$el.css({
+                color: this.model.get("attr").color,
+                fontSize: this.model.get("attr").fontSize + "%"
+            });
         }
   });
 
