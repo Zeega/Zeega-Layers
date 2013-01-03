@@ -37,16 +37,19 @@ function( Zeega, _Layer, MediaPlayer ) {
         },
 
         popLayer: function() {
-            this.popup = new PopupOverlay({
-                model: this.model,
-                template: "plugins/popup-" + this.model.get("attr").popup_content.media_type.toLowerCase()
-            });
-            // append to the player layout because the popup needs to live inside the player but also above all layers
-            this.model.status.get("project").Layout.$el.append( this.popup.el );
-            this.popup.render();
-            this.model.on("popup_remove", this.popupClosed, this );
-            // pause the player
-            this.model.status.get("project").pause();
+            if ( this.model.get("attr").popup_content ) {
+                console.log('this', this)
+                this.popup = new PopupOverlay({
+                    model: this.model,
+                    template: "plugins/popup-" + this.model.get("attr").popup_content.media_type.toLowerCase()
+                });
+                // append to the player layout because the popup needs to live inside the player but also above all layers
+                this.model.status.get("project").Layout.$el.append( this.popup.el );
+                this.popup.render();
+                this.model.on("popup_remove", this.popupClosed, this );
+                // pause the player
+                this.model.status.get("project").pause();
+            }
         },
 
         popupClosed: function() {
