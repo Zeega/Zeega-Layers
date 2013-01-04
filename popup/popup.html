@@ -9,4 +9,6 @@
     background-size: cover;
   "
   data-caption="<% if ( attr.popup_content ) { %><%= attr.popup_content.title %><% } %>"
-  ></a>
+  >
+  <% if ( attr.popup_content ) { %><span class="popup-title" style='display:none'><%= attr.popup_content.title %></span><% } %>
+</a>
