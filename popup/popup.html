@@ -1,0 +1,14 @@
+<a
+  href="#"
+  class="ZEEGA-popup-click-target"
+  style="
+    background: url(<% if ( attr.popup_target ) { %><%= attr.popup_target.uri %><% } %>) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  "
+  data-caption="<% if ( attr.popup_content ) { %><%= attr.popup_content.title %><% } %>"
+  >
+  <% if ( attr.popup_content ) { %><span class="popup-title" style='display:none'><%= attr.popup_content.title %></span><% } %>
+</a>
