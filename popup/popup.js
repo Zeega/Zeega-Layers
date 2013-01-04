@@ -92,12 +92,14 @@ function( Zeega, _Layer, MediaPlayer ) {
         },
 
         events: {
-            "click": "closeOverlay"
+            "click": "closeOverlay",
+            "click a": "closeOverlay"
         },
 
         closeOverlay: function() {
             this.removePopup();
             this.model.trigger("popup_remove");
+            return false;
         },
 
         removePopup: function() {
