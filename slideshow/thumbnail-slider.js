@@ -57,8 +57,6 @@ function( Zeega, _Layer, Metadata ) {
         events: {
             "click a.slider-thumb": "onClickThumb",
             "click a.trackback": "onClickTrackback",
-            "click .slideshow-slider-control-prev": "prev",
-            "click .slideshow-slider-control-next": "next",
 
             "mouseenter": "onMouseOver",
             "mouseleave": "sinkThumbSlider"
@@ -76,31 +74,6 @@ function( Zeega, _Layer, Metadata ) {
             this.sinkThumbsTimer = setTimeout(function() {
                 $(".slideshow-slider").animate({"bottom": -70 });
             }, 2000 );
-        },
-
-        prev: function() {
-
-            if ( this.slidePos > 0 ) {
-                this.slidePos--;
-                this.$("ul").stop().animate({
-                    "left": (this.slidePos * -171) + "px"
-                });
-            }
-            return false;
-        },
-
-        next: function() {
-            var $ul = this.$("ul");
-
-            // check slider position offset
-            if ( this.slidePos < this.slideNum - 1 &&
-                    ($ul.offset().left + $ul.width()) > this.$el.closest(".ZEEGA-player").width() ) {
-                this.slidePos++;
-                $ul.stop().animate({
-                    "left": this.slidePos * -171 + "px"
-                });
-            }
-            return false;
         },
 
         onClickThumb: function( e ) {

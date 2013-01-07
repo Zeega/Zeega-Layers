@@ -1,7 +1,8 @@
 define([
     "zeega",
     "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/layers/slideshow/thumbnail-slider"
+    "zeega_dir/plugins/layers/slideshow/thumbnail-slider",
+    "zeega_dir/plugins/layers/slideshow/cycle/cycle"
 ],
 
 function( Zeega, _Layer, SSSlider ) {
@@ -62,22 +63,28 @@ function( Zeega, _Layer, SSSlider ) {
             this.emitSlideData( this.slide );
             this.positionArrows();
 
-            // Specifically test for null to avoid false positives
-            // when startSlide is zero
-            if ( startSlide !== null ) {
 
-                this.scrollTo( startSlide );
-                this.model.set({ "start_slide": null }, { silent: true });
+            this.$(".slideshow-container").cycle({
+                timeout: 0,
+                fx: "scrollHorz"
+            });
 
-            } else if ( startSlideId !== null ) {
+            // // Specifically test for null to avoid false positives
+            // // when startSlide is zero
+            // if ( startSlide !== null ) {
 
-                index = this.model.get("attr").slides.map(function( slide ) {
-                    return +slide.id;
-                }).indexOf( startSlideId );
+            //     this.scrollTo( startSlide );
+            //     this.model.set({ "start_slide": null }, { silent: true });
 
-                this.scrollTo( index );
-                this.model.set({ "start_slide_id": null }, { silent: true });
-            }
+            // } else if ( startSlideId !== null ) {
+
+            //     index = this.model.get("attr").slides.map(function( slide ) {
+            //         return +slide.id;
+            //     }).indexOf( startSlideId );
+
+            //     this.scrollTo( index );
+            //     this.model.set({ "start_slide_id": null }, { silent: true });
+            // }
         },
 
         onRender: function() {
@@ -89,6 +96,7 @@ function( Zeega, _Layer, SSSlider ) {
 
         onExit: function() {
             this.killKeyboard();
+            this.$(".slideshow-container").cycle("destroy");
         },
 
         events: {
@@ -97,7 +105,6 @@ function( Zeega, _Layer, SSSlider ) {
         },
 
         goLeft: function() {
-
             if ( this.slide > 0 ) {
                 this.slide--;
                 this.scrollTo(this.slide);
@@ -106,7 +113,6 @@ function( Zeega, _Layer, SSSlider ) {
         },
 
         goRight: function() {
-
             if ( this.slide < this.slideCount -1 ) {
                 this.slide++;
                 this.scrollTo(this.slide);
@@ -118,9 +124,11 @@ function( Zeega, _Layer, SSSlider ) {
 
             this.slide = slideNo;
             this.hideArrows();
-            this.$(".slideshow-container").stop().animate({
-                left: (slideNo * -100)+"%"
-            });
+            this.$(".slideshow-container").cycle( slideNo );
+
+            // this.$(".slideshow-container").stop().animate({
+            //     left: (slideNo * -100)+"%"
+            // });
             this.updateTitle( slideNo );
             this.emitSlideData( slideNo );
         },
