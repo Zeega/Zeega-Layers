@@ -78,7 +78,7 @@ function( Zeega, _Layer, MediaPlayer ) {
                     model = new Zeega.Backbone.Model( modelAttr );
                 this.mediaPlayer = new MediaPlayer.Views.Player({
                     model: model,
-                    control_mode: "none"
+                    control_mode: "standard"
                 });
                 this.$(".popup-video").append( this.mediaPlayer.el );
                 this.mediaPlayer.render();
