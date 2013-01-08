@@ -121,14 +121,10 @@ function( Zeega, _Layer, SSSlider ) {
         },
 
         scrollTo: function( slideNo ) {
-
             this.slide = slideNo;
             this.hideArrows();
             this.$(".slideshow-container").cycle( slideNo );
 
-            // this.$(".slideshow-container").stop().animate({
-            //     left: (slideNo * -100)+"%"
-            // });
             this.updateTitle( slideNo );
             this.emitSlideData( slideNo );
         },

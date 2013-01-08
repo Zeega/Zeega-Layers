@@ -8,7 +8,7 @@
  * Requires: jQuery v1.3.2 or later
  */
 ;(function($, undefined) {
-"use strict";
+
 
 var ver = '2.9999.8';
 
@@ -1089,7 +1089,6 @@ $.fn.cycle.defaults = {
  * http://www.gnu.org/licenses/gpl.html
  */
 (function($) {
-"use strict";
 
 //
 // These functions define slide initialization and properties for the named
