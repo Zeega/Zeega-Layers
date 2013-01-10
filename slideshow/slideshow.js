@@ -2,7 +2,7 @@ define([
     "zeega",
     "zeega_dir/plugins/layers/_layer/_layer",
     "zeega_dir/plugins/layers/slideshow/thumbnail-slider",
-    "zeega_dir/plugins/layers/slideshow/cycle/cycle"
+    "plugins/cycle"
 ],
 
 function( Zeega, _Layer, SSSlider ) {
@@ -168,7 +168,7 @@ function( Zeega, _Layer, SSSlider ) {
         initKeyboard: function() {
             if ( this.getAttr("keyboard") ) {
 
-                $(window).on("keyup.slideshow", function( e ) {
+                Zeega.$(window).on("keyup.slideshow", function( e ) {
                     switch( e.which ) {
                         case 37: // left arrow
                             _this.goLeft();
@@ -183,7 +183,7 @@ function( Zeega, _Layer, SSSlider ) {
 
         killKeyboard: function() {
             if ( this.getAttr("keyboard") ) {
-                $(window).off("keyup.slideshow");
+                Zeega.$(window).off("keyup.slideshow");
             }
         }
     });

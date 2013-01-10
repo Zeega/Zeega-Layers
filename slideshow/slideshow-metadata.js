@@ -10,11 +10,9 @@ function( Zeega, _Layer ) {
     Metadata.View = _Layer.LayoutView.extend({
 
         className: 'slide-metadata',
-
         template: "plugins/slideshow-metadata",
 
         initialize: function() {
-            this.model.on('all', function(e) { console.log('e',e); });
             this.model.on("slideshow_update", this.onUpdate, this );
             this.slideInfo = this.model.get('attr').slides[0].attr;
         },

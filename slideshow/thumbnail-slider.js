@@ -66,18 +66,18 @@ function( Zeega, _Layer, Metadata ) {
             if ( this.sinkThumbsTimer ) {
                 clearTimeout( this.sinkThumbsTimer );
             }
-            $(".slideshow-slider").animate({"bottom": 0 });
+            Zeega.$(".slideshow-slider").animate({"bottom": 0 });
         },
 
         sinkThumbSlider: function() {
             var _this = this;
             this.sinkThumbsTimer = setTimeout(function() {
-                $(".slideshow-slider").animate({"bottom": -70 });
+                Zeega.$(".slideshow-slider").animate({"bottom": -70 });
             }, 2000 );
         },
 
         onClickThumb: function( e ) {
-            var slideNum = $( e.target ).closest("a").data("slidenum");
+            var slideNum = Zeega.$( e.target ).closest("a").data("slidenum");
 
             this.highlightThumb( slideNum );
             this.model.trigger("slideshow_switch-frame", slideNum );

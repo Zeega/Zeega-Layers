@@ -59,7 +59,7 @@ function( Zeega ) {
                 // Put fetch into `async-mode`.
                 done = this.async();
                 // Seek out the template asynchronously.
-                return $.ajax({ url: Zeega.root + path }).then(function( contents ) {
+                return Zeega.$.ajax({ url: Zeega.root + path }).then(function( contents ) {
                     done(
                       JST[ path ] = _.template( contents )
                     );
@@ -67,7 +67,9 @@ function( Zeega ) {
             }
         },
 
-        serialize: function() { return this.model.toJSON(); },
+        serialize: function() {
+            return this.model.toJSON();
+        },
 
         initialize: function() {
             this.init();
@@ -75,12 +77,12 @@ function( Zeega ) {
 
         beforePlayerRender: function() {},
         beforeRender: function() {
-            var target = $( this.model.get("_target") ).find(".ZEEGA-player-window");
+            var target = Zeega.$( this.model.get("_target") ).find(".ZEEGA-player-window");
 
             this.className = this._className + " " + this.className;
             this.beforePlayerRender();
 
-            $( target ).append( this.el );
+            Zeega.$( target ).append( this.el );
 
             this.$el.addClass( "visual-element-" + this.model.get("type").toLowerCase() );
             this.moveOffStage();
@@ -230,7 +232,7 @@ function( Zeega ) {
                 // Put fetch into `async-mode`.
                 done = this.async();
                 // Seek out the template asynchronously.
-                return $.ajax({ url: Zeega.root + path }).then(function( contents ) {
+                return Zeega.$.ajax({ url: Zeega.root + path }).then(function( contents ) {
                     done(JST[path] = _.template( contents ));
                 });
             }
