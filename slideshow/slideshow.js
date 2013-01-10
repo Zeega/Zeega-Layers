@@ -57,7 +57,7 @@ function( Zeega, _Layer, SSSlider ) {
                 startSlide = this.model.get("start_slide"),
                 startSlideId = this.model.get("start_slide_id");
 
-            this.$el.css({ "height": "100%" });
+            this.$el.css({ "height": this.$el.closest(".ZEEGA-player").height() + "px" });
             this.hideArrows();
             this.initKeyboard();
             this.emitSlideData( this.slide );
