@@ -13,26 +13,23 @@ function( Zeega, _Layer, SSSlider ) {
 
         layerType: "SlideShow",
 
-        // TODO: Invetigate rationale for quoting property names
-        // as strings...
-        // (appears throughout both Zeega-Player and Zeega-Layers)
         defaultAttributes: {
-            "arrows": true, // turns on/off visual arrow controls
-            "keyboard": false, // turns on/off keyboard controls
-            "thumbnail_slider": true, // turns on/off thumbnail drawer
+            arrows: true, // turns on/off visual arrow controls
+            keyboard: false, // turns on/off keyboard controls
+            thumbnail_slider: true, // turns on/off thumbnail drawer
 
-            "start_slide": null,
-            "start_slide_id": null,
-            "slides_bleed": true,
+            start_slide: null,
+            start_slide_id: null,
+            slides_bleed: true,
 
-            "title": "Slideshow Layer",
-            "url": "none",
-            "left": 0,
-            "top": 0,
-            "height": 100,
-            "width": 100,
-            "opacity": 1,
-            "aspect": 1.33
+            title: "Slideshow Layer",
+            url: "none",
+            left: 0,
+            top: 0,
+            height: 100,
+            width: 100,
+            opacity: 1,
+            aspect: 1.33
         }
     });
 
@@ -49,6 +46,7 @@ function( Zeega, _Layer, SSSlider ) {
         },
 
         serialize: function() {
+            console.log( this.model.toJSON() );
             return this.model.toJSON();
         },
 
