@@ -3,6 +3,12 @@
 
 <div class='slideshow-container'>
 	<% _.each( attr.slides, function(slide,i){ %>
-		<div class='slideshow-slide slideshow-slide-<%= i %>' style='width:<%= (100 / attr.slides.length) +'%' %>;background:url(<%= slide.attr.uri %>) no-repeat center center;-webkit-background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>; -moz-background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>; -o-background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>; background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>;'></div>
+		<div class='slideshow-slide slideshow-slide-<%= i %>' style='
+      background:url(<%= slide.attr.uri %>) no-repeat center center;
+      -webkit-background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>;
+      -moz-background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>;
+      -o-background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>;
+      background-size: <% if( slides_bleed ) { %>cover<% } else { %>contain<% } %>;
+    '></div>
 	<% }) %>
 </div>
