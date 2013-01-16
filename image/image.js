@@ -58,7 +58,7 @@ function( Zeega, _Layer ){
         },
 
         verifyReady: function() {
-            var img = this.$el.imagesLoaded();
+            var img = Zeega.$( this.$el ).imagesLoaded();
 
             img.done(function() {
                 this.model.trigger( "visual_ready", this.model.id );
