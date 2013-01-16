@@ -23,7 +23,7 @@ function( Zeega ) {
         defaultAttributes: {},
 
         initialize: function() {
-            this.defaults = _.extend( this.defaults, this.defaultAttributes );
+            this.defaults = _.extend({}, this.defaults, this.defaultAttributes );
             this.init();
         },
 
