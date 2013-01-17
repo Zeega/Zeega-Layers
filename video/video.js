@@ -144,7 +144,8 @@ function( Zeega, _Layer, MediaPlayer ) {
 
         onEnded: function() {
             this.playbackCount++;
-            this.model.trigger("playback_ended", this.model.toJSON() );
+            //this.model.trigger("playback_ended", this.model.toJSON() );
+            this.model.status.emit( "ended", this.model.toJSON() );
             if ( this.getAttr("loop") ) {
                 this.mediaPlayer.setCurrentTime( this.getAttr("cue_in") );
                 this.mediaPlayer.play();
