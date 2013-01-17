@@ -10,7 +10,7 @@ function( Zeega ) {
 
         controls: [],
 
-        defaults: {
+        defaultAttr: {
             citation: true,
             default_controls: true,
             draggable: true,
@@ -20,10 +20,11 @@ function( Zeega ) {
             resizable: false
         },
 
-        defaultAttributes: {},
+        attr: {},
 
         initialize: function() {
-            this.defaults = _.extend({}, this.defaults, this.defaultAttributes );
+            var attr = _.extend({}, this.defaultAttr, this.attr );
+            this.set( "attr", attr );
             this.init();
         },
 

@@ -13,7 +13,7 @@ function( Zeega, _Layer ){
 
         layerType: "Image",
 
-        defaultAttributes: {
+        attr: {
             "title": "Image Layer",
             "url": "none",
             "left": 0,

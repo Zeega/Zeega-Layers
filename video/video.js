@@ -12,7 +12,7 @@ function( Zeega, _Layer, MediaPlayer ) {
 
         layerType: "Video",
 
-        defaultAttributes: {
+        attr: {
             "title": "Video Layer",
             "url": "none",
             "left": 0,

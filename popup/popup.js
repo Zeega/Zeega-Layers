@@ -12,7 +12,7 @@ function( Zeega, _Layer, MediaPlayer ) {
 
         layerType: "Popup",
 
-        defaultAttributes: {
+        attr: {
             citation: false,
             default_controls: true,
             left: 30,

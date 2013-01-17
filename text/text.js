@@ -11,7 +11,7 @@ function( Zeega, _Layer ) {
         // this is a Layer, wouldn't "type" be sufficient?
         layerType: "Text",
 
-        defaultAttributes: {
+        attr: {
             "citation": false,
             "default_controls": true,
             "left": 30,

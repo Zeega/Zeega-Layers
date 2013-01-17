@@ -13,7 +13,7 @@ function( Zeega, _Layer ){
 
         layerType: "Geo",
 
-        defaultAttributes: {
+        attr: {
             title: "Streetview Layer",
             url: null,
             left: 0,

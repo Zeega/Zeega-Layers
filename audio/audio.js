@@ -12,7 +12,7 @@ function( Zeega, _Layer, VideoLayer ){
 
         layerType: "Audio",
 
-        defaultAttributes: {
+        attr: {
             "title": "Audio Layer",
             "url": "none",
             "left": 0,

@@ -13,7 +13,7 @@ function( Zeega, _Layer, SSSlider ) {
 
         layerType: "SlideShow",
 
-        defaultAttributes: {
+        attr: {
             arrows: true, // turns on/off visual arrow controls
             keyboard: false, // turns on/off keyboard controls
             thumbnail_slider: true, // turns on/off thumbnail drawer
