@@ -40,41 +40,18 @@ function( Zeega, _Layer ) {
     },
 
     beforePlayerRender: function() {
-        var _this = this,
-        style = {
-            "border-radius": "0",
-            "height": this.getAttr("height") + "%",
-            "background": this.getAttr("backgroundColor"),
-            "opacity": this.getAttr("opacity"),
-            "box-shadow": "0 0 10px rgba(255,255,255,"+ this.getAttr("opacity") +")"
-        };
+      style = {
+          "border-radius": "0",
+          "height": this.getAttr("height") + "%",
+          "background": this.getAttr("backgroundColor"),
+          "opacity": this.getAttr("opacity"),
+          "box-shadow": "0 0 10px rgba(255,255,255,"+ this.getAttr("opacity") + ")"
+      };
 
       this.$el.attr("data-glowOnHover", this.getAttr("glow_on_hover") );
 
       this.$el.addClass("link-type-" + this.getAttr("link_type") );
-/*
-      this.$el.removeClass("link-arrow-right link-arrow-down link-arrow-up link-arrow-left");
-
-      if( this.preview ) this.delegateEvents({"click":"goClick"});
-
-      if(this.model.get("attr").link_type == "arrow_left")
-        this.$el.html( this.getTemplate() ).css( style ).addClass("link-arrow-left");
-      else if(this.model.get("attr").link_type == "arrow_right")
-        this.$el.html( this.getTemplate() ).css( style ).addClass("link-arrow-right");
-      else if(this.model.get("attr").link_type == "arrow_up")
-        this.$el.html( this.getTemplate() ).css( style ).addClass("link-arrow-up");
-
-      if( this.model.get("attr").glow_on_hover ) this.$el.addClass("linked-layer-glow");
-
-      if( this.getAttr("mode") == "editor" )
-      {
-        _.extend( style, {
-          "border": "2px dashed orangered",
-          "border-radius": "6px"
-        });
-      }
-*/
-        this.$(".ZEEGA-link-inner").css( style );
+      this.$(".ZEEGA-link-inner").css( style );
     },
 
     events: {
@@ -96,24 +73,7 @@ function( Zeega, _Layer ) {
         return false;
     }
 
-    /*
-    player_onPlay: function()
-    {
-      this.render();
-      this.delegateEvents({
-        "click":"goClick",
-        "mouseover": "onMouseOver",
-        "mouseout": "onMouseOut"
-      });
-      var _this = this;
-      this.$el.animate({opacity:1},1000,function(){
-        _this.$el.animate({opacity:0},1000);
-      });
-    }
-    */
-
-
-    });
+  });
 
     return Layer;
 });
