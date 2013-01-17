@@ -86,7 +86,7 @@ function( Zeega ) {
 
             this.$el.addClass( "visual-element-" + this.model.get("type").toLowerCase() );
             this.moveOffStage();
-            this.applySize();
+            this.applyStyles();
         },
 
         afterRender: function() {
@@ -96,10 +96,11 @@ function( Zeega ) {
 
         onRender: function() {},
 
-        applySize: function() {
+        applyStyles: function() {
             this.$el.css({
                 height: this.getAttr("height") + "%", // photos need a height!
-                width: this.getAttr("width") + "%"
+                width: this.getAttr("width") + "%",
+                opacity: this.getAttr("opacity") || 1
             });
         },
 
