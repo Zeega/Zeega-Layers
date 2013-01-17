@@ -49,13 +49,11 @@ function( Zeega, _Layer, MediaPlayer ) {
         },
 
         onPlay: function() {
-
             this.ended = false;
             this.mediaPlayer.play();
         },
 
         onPause: function() {
-
             this.mediaPlayer.pause();
         },
 
@@ -126,7 +124,6 @@ function( Zeega, _Layer, MediaPlayer ) {
                 // TODO: the missing else statement leads me to believe
                 // that this entire condition tree could be refactored
 
-
                 // send updates to the player. must include the layer
                 // info incase there are > 1 media layers on a single frame
                 var info = {
@@ -138,9 +135,8 @@ function( Zeega, _Layer, MediaPlayer ) {
                     current_time: this.mediaPlayer.getCurrentTime(),
                     duration: this.mediaPlayer.getDuration()
                 };
-
                 this.model.status.emit("media_timeupdate", info );
-                if ( this.mediaPlayer.getCurrentTime() >= out ) {
+                if ( info.current_time >= out - 1 ) {
                     this.onEnded();
                 }
             }
@@ -150,7 +146,7 @@ function( Zeega, _Layer, MediaPlayer ) {
             this.playbackCount++;
             this.model.trigger("playback_ended", this.model.toJSON() );
             if ( this.getAttr("loop") ) {
-                this.mediaPlayer.currentTime( this.getAttr("cue_in") );
+                this.mediaPlayer.setCurrentTime( this.getAttr("cue_in") );
                 this.mediaPlayer.play();
             } else {
                 this.ended = true;
