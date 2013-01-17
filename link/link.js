@@ -51,7 +51,6 @@ function( Zeega, _Layer ) {
 
       this.$el.attr("data-glowOnHover", this.getAttr("glow_on_hover") );
 
-      console.log("link", this, this.getAttr("link_type") )
       this.$el.addClass("link-type-" + this.getAttr("link_type") );
 /*
       this.$el.removeClass("link-arrow-right link-arrow-down link-arrow-up link-arrow-left");
