@@ -117,6 +117,9 @@ function( Zeega ) {
         },
 
         player_onPlay: function() {
+            if ( this.getAttr("blink_on_start") ) {
+                this.glowOnFrameStart();
+            }
             this.onPlay();
         },
 
@@ -137,6 +140,14 @@ function( Zeega ) {
         onPlay: function() {},
         onPause: function() {},
         onExit: function() {},
+
+
+        glowOnFrameStart: function() {
+            this.model.visualElement.$el.addClass("glow-blink");
+            _.delay(function() {
+                this.model.visualElement.$el.removeClass("glow-blink");
+            }.bind( this ), 1000 );
+        },
 
         /*
         TODO: Why is this special cased?

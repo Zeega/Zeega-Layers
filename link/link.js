@@ -35,7 +35,6 @@ function( Zeega, _Layer ) {
     template: "plugins/link",
 
     serialize: function() {
-        console.log("link layer", this.model);
         return this.model.toJSON();
     },
 
