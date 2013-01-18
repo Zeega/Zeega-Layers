@@ -94,7 +94,7 @@ function( Zeega, _Layer, SSSlider ) {
             this.initKeyboard();
             this.emitSlideData( this.slide );
             this.positionArrows();
-console.log(this.model)
+
             // investigate why this is needed
             Zeega.$( this.$(".slideshow-container")[0] ).cycle({
                 timeout: 0,
