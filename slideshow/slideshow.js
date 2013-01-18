@@ -1,3 +1,37 @@
+/*
+    possible transitions: [via http://jquery.malsup.com/cycle/browser.html]
+
+    blindX
+    blindY
+    blindZ
+    cover
+    curtainX
+    curtainY
+    fade
+    fadeZoom
+    growX
+    growY
+    none
+    scrollUp
+    scrollDown
+    scrollLeft
+    scrollRight
+    scrollHorz
+    scrollVert
+    shuffle
+    slideX
+    slideY
+    toss
+    turnUp
+    turnDown
+    turnLeft
+    turnRight
+    uncover
+    wipe
+    zoom
+
+*/
+
 define([
     "zeega",
     "zeega_dir/plugins/layers/_layer/_layer",
@@ -60,11 +94,12 @@ function( Zeega, _Layer, SSSlider ) {
             this.initKeyboard();
             this.emitSlideData( this.slide );
             this.positionArrows();
-
+console.log(this.model)
             // investigate why this is needed
             Zeega.$( this.$(".slideshow-container")[0] ).cycle({
                 timeout: 0,
-                fx: "scrollHorz",
+                fx: this.model.get("transition") || "scrollHorz",
+                speed: this.model.get("speed") || 1000,
                 startingSlide: this.slide
             });
 
@@ -129,8 +164,8 @@ function( Zeega, _Layer, SSSlider ) {
         positionArrows: function() {
             this.$(".slideshow-arrow").css({
                 top: (this.$el.closest(".ZEEGA-player").height() / 2 - 50) + "px",
-                height: (this.$el.closest(".ZEEGA-player").height() / 10 )+ "px",
-                width: (this.$el.closest(".ZEEGA-player").height() / 10 )+ "px"
+                height: (this.$el.closest(".ZEEGA-player").height() / 10 ) + "px",
+                width: (this.$el.closest(".ZEEGA-player").height() / 10 ) + "px"
             });
         },
 
@@ -151,7 +186,7 @@ function( Zeega, _Layer, SSSlider ) {
         initKeyboard: function() {
             if ( this.getAttr("keyboard") ) {
 
-                Zeega.$(window).on("keyup.slideshow", function( e ) {
+                Zeega.$( window ).on("keyup.slideshow", function( e ) {
                     switch( e.which ) {
                         case 37: // left arrow
                             _this.goLeft();
@@ -166,7 +201,7 @@ function( Zeega, _Layer, SSSlider ) {
 
         killKeyboard: function() {
             if ( this.getAttr("keyboard") ) {
-                Zeega.$(window).off("keyup.slideshow");
+                Zeega.$( window ).off("keyup.slideshow");
             }
         }
     });
