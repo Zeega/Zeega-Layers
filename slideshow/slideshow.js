@@ -80,7 +80,6 @@ function( Zeega, _Layer, SSSlider ) {
         },
 
         serialize: function() {
-            console.log( this.model.toJSON() );
             return this.model.toJSON();
         },
 
