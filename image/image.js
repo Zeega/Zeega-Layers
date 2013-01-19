@@ -1,6 +1,6 @@
 define([
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/_layer/_layer",
     //plugins
     "plugins/jquery.imagesloaded.min"
 ],

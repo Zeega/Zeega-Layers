@@ -1,7 +1,7 @@
 define([
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/layers/video/video"
+    "zeega_parser/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/video/video"
 ],
 
 function( Zeega, _Layer, VideoLayer ){

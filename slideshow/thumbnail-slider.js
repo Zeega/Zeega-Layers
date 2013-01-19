@@ -1,7 +1,7 @@
 define([
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/layers/slideshow/slideshow-metadata"
+    "zeega_parser/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/slideshow/slideshow-metadata"
 
 ],
 

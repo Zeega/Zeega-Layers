@@ -1,7 +1,7 @@
 define([
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/media-player/media-player"
+    "zeega_parser/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/media-player/media-player"
 
 ],
 function( Zeega, _Layer, MediaPlayer ) {
