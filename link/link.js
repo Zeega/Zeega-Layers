@@ -12,10 +12,11 @@ function( Zeega, _Layer ) {
         layerType: "Link",
 
         attr: {
-            title: "Poop Layer",
+            title: "Link Layer",
             from_sequence: null,
             to_frame: null,
             from_frame: null,
+            from_sequence: null,
             left: 25,
             top: 25,
             height: 50,
