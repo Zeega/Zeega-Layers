@@ -65,6 +65,7 @@ function( Zeega, _Layer, MediaPlayer ) {
         verifyReady: function() {
             if ( this.mediaPlayer_loaded !== true ) {
                 var _this = this;
+
                 this.mediaPlayer = new MediaPlayer.Views.Player({
                     model: this.model,
                     control_mode: "none",
@@ -73,7 +74,7 @@ function( Zeega, _Layer, MediaPlayer ) {
                 this.$el.append( this.mediaPlayer.el );
                 this.mediaPlayer.render();
                 this.mediaPlayer.placePlayer();
-                this.mediaPlayer.popcorn.listen("timeupdate", function() {
+                this.mediaPlayer.popcorn.on("timeupdate", function() {
                   _this.onTimeUpdate();
                 });
                 this.model.on("media_ended", function() {
