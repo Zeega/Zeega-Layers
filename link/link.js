@@ -13,10 +13,10 @@ function( Zeega, _Layer ) {
 
         attr: {
             title: "Link Layer",
-            to_sequence: null,
+            //to_sequence: null,
             to_frame: null,
-            from_frame: null,
-            from_sequence: null,
+            //from_frame: null,
+            //from_sequence: null,
             left: 25,
             top: 25,
             height: 50,
