@@ -100,8 +100,7 @@ function( Zeega ) {
         applyStyles: function() {
             this.$el.css({
                 height: this.getAttr("height") + "%", // photos need a height!
-                width: this.getAttr("width") + "%",
-                opacity: this.getAttr("opacity") || 1
+                width: this.getAttr("width") + "%"
             });
         },
 
@@ -199,8 +198,14 @@ function( Zeega ) {
         moveOnStage: function() {
             this.$el.css({
                 top: this.getAttr("top") + "%",
-                left: this.getAttr("left") + "%"
+                left: this.getAttr("left") + "%",
+                opacity: this.getAttr("opacity") || 1,
+                display: this.getAttr("dissolve") ? "none" : "block"
             });
+            if ( this.getAttr("dissolve") ) {
+                this.$el.fadeIn();
+            }
+
         },
 
         play: function() {
