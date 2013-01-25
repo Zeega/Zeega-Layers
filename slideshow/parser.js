@@ -11,7 +11,7 @@ define([
 
 function( _ ) {
 
-    var Slideshow = {}
+    var Slideshow = {};
 
     Slideshow.parse = function( layers, options ) {
         var defaults, slides;
@@ -29,10 +29,10 @@ function( _ ) {
                     attr: layer,
                     type: layer.layer_type,
                     id: layer.id
-                })
+                });
                 return true;
             }
-            return false
+            return false;
         });
 
         return {
@@ -45,7 +45,7 @@ function( _ ) {
             type: "SlideShow",
             id: 1
         };
-    }
+    };
 
     return Slideshow;
 });
